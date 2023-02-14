@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\ReponseReclamation" table="reponse_reclamation">
+    <indexes>
+      <index name="fk9" columns="id_reclamation"/>
+    </indexes>
+    <id name="idReponse" type="integer" column="id_reponse">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="sujet" type="string" column="sujet" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="etat" type="string" column="etat" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="date" type="date" column="date" nullable="false">
+      <options>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="idReclamation" target-entity="Reclamation" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_reclamation" referenced-column-name="id_rec"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
