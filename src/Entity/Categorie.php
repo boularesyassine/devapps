@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Categorie
  *
@@ -22,6 +22,8 @@ class Categorie
     private $id;
 
     /**
+     * @Assert\NotBlank(message=" nom  est obligatoire")
+     * @Assert\Type(type="string") 
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)

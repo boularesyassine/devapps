@@ -30,6 +30,17 @@ class ProduitController extends AbstractController
         ]);
     }
 
+      /**
+     * @Route("/displayfront", name="displayfront")
+     */
+    public function displayfront(): Response
+    {
+        $produits= $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
+        return $this->render('produit/indexfront.html.twig', [
+            'b'=>$produits
+        ]);
+    }
+
    /**
      * @Route("/addproduit", name="addproduit")
      */
@@ -88,7 +99,7 @@ $Produit=$this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('i
 $em=$this->getDoctrine()->getManager();
 $em->remove($Produit);
 $em->flush();
-return new Response("success");
+return new Response("produit supprimé");
 
 }
 

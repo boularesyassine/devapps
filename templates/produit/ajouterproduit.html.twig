@@ -1,7 +1,7 @@
-{% extends 'basefront.html.twig' %}
+{% extends 'baseback.html.twig' %}
  {% block body %}
 
 
-{{ form_start(f) }}
+{{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
 {{ form_end(f) }}
  {% endblock %}
