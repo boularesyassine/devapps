@@ -22,7 +22,7 @@ class UtilisateurController extends AbstractController
 
 
     /**
-     * @Route("/Utilisateur", name="displayusers")
+     * @Route("/Utilisateurs", name="displayusers")
      */
     public function afficherusers(): Response
     {
@@ -90,8 +90,10 @@ $utilisateur=$this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(
 
 $entityManager->remove($utilisateur);
 $entityManager->flush();
-return new Response("success");
-
+$Utilisateurs= $this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->findAll();
+return $this->render('Utilisateur/index.html.twig', [
+    'b'=>$Utilisateurs
+]);
 }
 
 }

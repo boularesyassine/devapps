@@ -8,7 +8,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use App\Validator\Constraints\StartsWithCapital;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class UtilisateurType extends AbstractType
@@ -18,13 +24,26 @@ class UtilisateurType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('password')
-            ->add('email')
+            ->add('password', TextType::class, [
+                'constraints' => [
+                    new StartsWithCapital(),
+                    new Regex([
+                        'pattern' => '/\d/',
+                        'message' => 'The password must contain at least one number.',
+                    ]),
+                ],
+            ])
+                        ->add('email')
             ->add('adresse')
             ->add('age')
             ->add('username')
             ->add('photo')
-            ->add('Save',SubmitType::class)
+            ->add('save',SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
+            ])
+
         ;
     }
 
