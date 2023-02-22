@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * ReponseReclamation
  *
@@ -23,8 +23,6 @@ class ReponseReclamation
     private $idReponse;
 
     /**
-     * @Assert\NotBlank(message=" sujet  est obligatoire")
-     * @Assert\Type(type="string") 
      * @var string
      *
      * @ORM\Column(name="sujet", type="string", length=255, nullable=false)
@@ -32,8 +30,6 @@ class ReponseReclamation
     private $sujet;
 
     /**
-     * @Assert\NotBlank(message=" etat  est obligatoire")
-     * @Assert\Type(type="string") 
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)
@@ -43,7 +39,7 @@ class ReponseReclamation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date", nullable=false)
+     * @ORM\Column(name="date", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $date = 'CURRENT_TIMESTAMP';
 
@@ -61,10 +57,7 @@ class ReponseReclamation
     {
         return $this->idReponse;
     }
-    public function id_reponse(): ?int
-    {
-        return $this->idReponse;
-    }
+
     public function getSujet(): ?string
     {
         return $this->sujet;
@@ -105,10 +98,7 @@ class ReponseReclamation
     {
         return $this->idReclamation;
     }
-    public function id_reclamation(): ?Reclamation
-    {
-        return $this->idReclamation;
-    }
+
     public function setIdReclamation(?Reclamation $idReclamation): self
     {
         $this->idReclamation = $idReclamation;

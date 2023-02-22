@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AppelOffre
  *
- * @ORM\Table(name="appel_offre", indexes={@ORM\Index(name="fk10", columns={"id_categorie"}), @ORM\Index(name="fk1", columns={"id_utilisateur"})})
+ * @ORM\Table(name="appel_offre", indexes={@ORM\Index(name="fk1", columns={"id_utilisateur"}), @ORM\Index(name="fk10", columns={"id_categorie"})})
  * @ORM\Entity
  */
 class AppelOffre
@@ -146,6 +146,8 @@ class AppelOffre
     {
         return $this->idUtilisateur;
     }
+
+    
 
     public function setIdUtilisateur(?Utilisateur $idUtilisateur): self
     {

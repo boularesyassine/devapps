@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sponsor
@@ -22,6 +23,8 @@ class Sponsor
     private $id;
 
     /**
+    * @Assert\NotBlank(message=" nom  est obligatoire")
+     * @Assert\Type(type="string")
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
@@ -29,6 +32,8 @@ class Sponsor
     private $nom;
 
     /**
+    * @Assert\NotBlank(message=" adresse  est obligatoire")
+     * @Assert\Type(type="string")
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
@@ -36,6 +41,12 @@ class Sponsor
     private $adresse;
 
     /**
+     * @Assert\NotBlank(message=" email  est obligatoire")
+     * @Assert\Type(type="string") 
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/",
+     *     message="not_valid_email"
+     * )
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
@@ -43,6 +54,8 @@ class Sponsor
     private $email;
 
     /**
+    * @Assert\NotBlank(message=" num_tel  est obligatoire")
+     * @Assert\Type(type="integer") 
      * @var int
      *
      * @ORM\Column(name="num_tel", type="integer", nullable=false)
@@ -94,7 +107,10 @@ class Sponsor
     {
         return $this->numTel;
     }
-
+    public function getnum_tel(): ?int
+    {
+        return $this->numTel;
+    }
     public function setNumTel(int $numTel): self
     {
         $this->numTel = $numTel;

@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Utilisateur;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reclamation
@@ -25,12 +23,6 @@ class Reclamation
     private $idRec;
 
     /**
-     * @Assert\NotBlank(message=" sujet  est obligatoire")
-     * @Assert\Type(type="string")
-     * @Assert\Regex(
-     *     pattern="/\b[A-Z0-9]+\b/",
-     *     message="The value {{ value }} is not a valid uppercase text."
-     * )
      * @var string
      *
      * @ORM\Column(name="sujet", type="string", length=255, nullable=false)
@@ -38,12 +30,6 @@ class Reclamation
     private $sujet;
 
     /**
-     * @Assert\NotBlank(message=" email  est obligatoire")
-     * @Assert\Type(type="string") 
-     * @Assert\Regex(
-     *     pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/",
-     *     message="not_valid_email"
-     * )
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
@@ -51,13 +37,6 @@ class Reclamation
     private $email;
 
     /**
-     
-     * @Assert\NotBlank(message=" description est obligatoire")
-     * @Assert\Length(
-     *      min = 8,
-     *      minMessage=" Entrer un Description au mini de 8 caracteres"
-     *
-     *     ) 
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
@@ -65,8 +44,6 @@ class Reclamation
     private $description;
 
     /**
-     * @Assert\NotBlank(message=" etat  est obligatoire")
-     * @Assert\Type(type="string")
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)
@@ -78,19 +55,19 @@ class Reclamation
      *
      * @ORM\Column(name="date", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $date ;
+    private $date = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_utilisateur", referencedColumnName="id")
+     * })
      */
-
-
     private $idUtilisateur;
 
-    public function id_rec(): ?int
+    public function getIdRec(): ?int
     {
         return $this->idRec;
     }
@@ -148,8 +125,6 @@ class Reclamation
         return $this->date;
     }
 
-    
-
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -168,9 +143,6 @@ class Reclamation
 
         return $this;
     }
-    public function __toString()
-    {
-        return (String)$this->idRec;
-    }
+
 
 }

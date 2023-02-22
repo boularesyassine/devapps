@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\DBAL\Types\type;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\Sponsor;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Publicite
  *
@@ -22,6 +23,9 @@ class Publicite
     private $id;
 
     /**
+     
+    * @Assert\NotBlank(message=" nomPub  est obligatoire")
+     * @Assert\Type(type="string")
      * @var string
      *
      * @ORM\Column(name="nom_pub", type="string", length=255, nullable=false)
@@ -29,6 +33,12 @@ class Publicite
     private $nomPub;
 
     /**
+    * @Assert\NotBlank(message=" description est obligatoire")
+     * @Assert\Length(
+     *      min = 8,
+     *      minMessage=" Entrer un Description au mini de 8 caracteres"
+     *
+     *     )
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
@@ -36,6 +46,8 @@ class Publicite
     private $description;
 
     /**
+     * @Assert\NotBlank(message=" image  est obligatoire")
+     * @Assert\Type(type="string")
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
@@ -45,11 +57,11 @@ class Publicite
     /**
      * @var \Sponsor
      *
-     * @ORM\ManyToOne(targetEntity="Sponsor")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sponsor", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity=Sponsor::class)
+     * @ORM\JoinColumn(nullable=false)
      * })
      */
+
     private $idSponsor;
 
     public function getId(): ?int
@@ -61,6 +73,12 @@ class Publicite
     {
         return $this->nomPub;
     }
+
+    public function nom_pub(): ?string
+    {
+        return $this->nomPub;
+    }
+
 
     public function setNomPub(string $nomPub): self
     {

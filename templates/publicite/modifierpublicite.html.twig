@@ -1,0 +1,52 @@
+
+
+
+ {% extends 'baseback.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;"> modifier publicite </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">nom publicite</label>
+                      {{ form_widget(f.nomPub, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  nomPub'}}) }}
+                                                                            {{ form_errors(f.nomPub,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">description</label>
+                      {{ form_widget(f.description, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  description'}}) }}
+                                                      {{ form_errors(f.description,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+
+
+                
+
+
+               <div class="col-12">
+                  <label for="inputAddress" class="form-label">id sponsor</label>
+                      {{ form_widget(f.id_sponsor) }}
+                </div>
+    
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}
