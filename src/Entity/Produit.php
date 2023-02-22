@@ -24,7 +24,7 @@ class Produit
 
     /**
      
-     * @Assert\NotBlank(message=" nom_produit  est obligatoire")
+     * @Assert\NotBlank(message=" nom_produit obligatoire")
      * @Assert\Type(type="string")
      * @var string
      *
@@ -33,7 +33,7 @@ class Produit
     private $nomProduit;
 
     /**
-    * @Assert\NotBlank(message=" description est obligatoire")
+    * @Assert\NotBlank(message=" description obligatoire")
      * @Assert\Length(
      *      min = 8,
      *      minMessage=" Entrer un Description au mini de 8 caracteres"
@@ -46,25 +46,30 @@ class Produit
     private $description;
 
     /**
-     * @Assert\NotBlank(message=" prix  est obligatoire")
+     * @Assert\NotBlank(message=" prix obligatoire")
      * @Assert\Type(type="float")
      * @var float
      *
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+      * @Assert\Positive(message=" le prix doit etre positive!")
      */
+    
     private $prix;
 
+
     /**
-     * @Assert\NotBlank(message=" quantite  est obligatoire")
+     * @Assert\NotBlank(message=" quantite obligatoire")
      * @Assert\Type(type="integer")
      * @var int
      *
      * @ORM\Column(name="quantite", type="integer", nullable=false)
+           * @Assert\Positive(message=" la quantité doit etre positive!")
+
      */
     private $quantite;
 
     /**
-     * @Assert\NotBlank(message=" photo  est obligatoire")
+     * @Assert\NotBlank(message=" photo obligatoire")
      * @Assert\Type(type="string")
      * @var string
      *

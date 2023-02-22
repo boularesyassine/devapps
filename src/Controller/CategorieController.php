@@ -50,6 +50,17 @@ class CategorieController extends AbstractController
 
     }
 
+      /**
+     * @Route("/displayfrontcategorie", name="displayfrontcategorie")
+     */
+    public function displayfrontcategorie(): Response
+    {
+        $categories= $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+        return $this->render('categorie/indexfront.html.twig', [
+            'b'=>$categories
+        ]);
+    }
+
     
     /**
      * @Route("/modifiercategorie/{id}", name="modifiercategorie")
@@ -86,8 +97,10 @@ $categorie=$this->getDoctrine()->getRepository(Categorie::class)->findOneBy(arra
 $em=$this->getDoctrine()->getManager();
 $em->remove($categorie);
 $em->flush();
-return new Response("categorie supprimée");
-
+$categories= $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+return $this->render('categorie/index.html.twig', [
+    'b'=>$categories
+]);
 }
 
 }

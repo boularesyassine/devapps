@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ProduitTType;
+use App\Form\UpdateProduitType;
+use DateTime;
+
 class ProduitController extends AbstractController
 {
     #[Route('/produit', name: 'app_produit')]
@@ -40,8 +43,20 @@ class ProduitController extends AbstractController
             'b'=>$produits
         ]);
     }
-
    /**
+     * @Route("/afficherproduitcat/{id}", name="afficherproduitcat")
+     */
+    public function afficherproduitcat($id): Response
+    {
+
+        
+
+        $produits= $this->getDoctrine()->getManager()->getRepository(Produit::class)->findBy(['idCategorie' => $id]);
+
+        return $this->render('produit/indexfront.html.twig', [
+            'b'=>$produits
+        ]);
+    }   /**
      * @Route("/addproduit", name="addproduit")
      */
     public function addproduit(Request $request): Response
@@ -51,6 +66,15 @@ class ProduitController extends AbstractController
        $form=$this->createForm(ProduitTType::class,$produit);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
+        $produit->setDate(new DateTime());
+            /** @var UploadedFile $file */
+            $file = $form->get('photo')->getData();
+            $filename=md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+            $this->getParameter('Images_directory'),
+            $filename
+            );
+            $produit->setPhoto($filename);
            $em = $this->getDoctrine()->getManager();
            $em->persist($produit);
            $em->flush();
@@ -69,7 +93,7 @@ class ProduitController extends AbstractController
     {
       
        $produit=$this->getDoctrine()->getManager()->getRepository(Produit::class)->find($id_produit);
-       $form=$this->createForm(ProduitTType::class,$produit);
+       $form=$this->createForm(UpdateProduitType::class,$produit);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
     
@@ -99,7 +123,10 @@ $Produit=$this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('i
 $em=$this->getDoctrine()->getManager();
 $em->remove($Produit);
 $em->flush();
-return new Response("produit supprimé");
+$produits= $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
+return $this->render('produit/index.html.twig', [
+    'b'=>$produits
+]);
 
 }
 

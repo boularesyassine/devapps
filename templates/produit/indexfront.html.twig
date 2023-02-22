@@ -15,14 +15,15 @@
                             <h5 class="mb-3">{{ produit.nom_produit}} </h5>
                              <p> prix : {{  produit.prix}}</p>
                               <p> quantite : {{  produit.quantite }}</p>
-                               <p> photo : {{  produit.photo }}</p>
+                               <p> <img src="uploads/{{  produit.photo }}" height="100" width="100"> </p>
                                 <p> date : {{  produit.date|date('d-m-Y') }}</p>
                                  <p> description : {{  produit.description }}</p>
-                          
                             <a class="btn px-3 mt-auto mx-auto" href="">demande</a>
                         </div>
                     </div>
                           {% endfor %}
                 </div>
+
+
 
                 {% endblock %}

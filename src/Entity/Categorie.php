@@ -22,7 +22,7 @@ class Categorie
     private $id;
 
     /**
-     * @Assert\NotBlank(message=" nom  est obligatoire")
+     * @Assert\NotBlank(message=" nom obligatoire")
      * @Assert\Type(type="string") 
      * @var string
      *
@@ -47,5 +47,8 @@ class Categorie
         return $this;
     }
 
-
+    public function __toString()
+    {
+       return (string)$this->id ;
+    }
 }
