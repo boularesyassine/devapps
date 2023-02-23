@@ -18,7 +18,7 @@ class Utilisateur implements UserInterface
      * 
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false) 
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -54,6 +54,10 @@ class Utilisateur implements UserInterface
     /**
      * @Assert\NotBlank(message=" email  est obligatoire")
      * @Assert\Type(type="string")
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/",
+     *     message="not_valid_email"
+     * )
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
@@ -65,7 +69,8 @@ class Utilisateur implements UserInterface
      * @Assert\Type(type="string")
      * @var string
      *
-     * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
+     * @ORM\Column(name="adresse",
+     *  type="string", length=255, nullable=false)
      */
     private $adresse;
 
@@ -227,12 +232,20 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
-
+   /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
-
+   /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;

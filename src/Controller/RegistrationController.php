@@ -19,10 +19,10 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
-        $user = new Utilisateur();
-        $role='ROLE_USER';
-        $form = $this->createForm(UtilisateurType::class, $user);
-        $form->handleRequest($request);
+        $user = new Utilisateur(); // instance du class user
+        $role='ROLE_USER'; // varibale feha array 'ROLE_USER'
+        $form = $this->createForm(UtilisateurType::class, $user); //creation du formulaire en s'adaptand lil utilisateur type ( fichier du formulaire = 9aleb) les info li inputed fil form ils vons etre stocker dans l'instance
+        $form->handleRequest($request); // preparation du requet sql 
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -32,11 +32,21 @@ class RegistrationController extends AbstractController
                         $form->get('password')->getData()
                     )
                 );
+                /** @var UploadedFile $file */
+            $file = $form->get('photo')->getData();
+           $filename=md5(uniqid()).'.'.$file->guessExtension(); 
+           $file->move(
+            $this->getParameter('Images_directory'),
+            $filename
+            
+        );
+        $user->setPhoto($filename);
+        // stockage du path d'image selectionner dans la  bd 
             $user->setRoles($role);
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+            
 
             return $this->redirectToRoute('app_login');
         }

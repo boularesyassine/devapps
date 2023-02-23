@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use App\Form\UpdateUtilisateurType;
+
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -61,7 +63,7 @@ class UtilisateurController extends AbstractController
     {
       
        $utilisateur=$this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->find($id);
-       $form=$this->createForm(UtilisateurType::class,$utilisateur);
+       $form=$this->createForm(UpdateUtilisateurType::class,$utilisateur);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
     
