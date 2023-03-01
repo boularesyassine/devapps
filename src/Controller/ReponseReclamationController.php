@@ -9,6 +9,7 @@ use DateTime;
 
 use App\Entity\ReponseReclamation;
 use App\Entity\Reclamation;
+use Symfony\Component\Serializer\SerializerInterface;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,5 +135,113 @@ $ReponseReclamations= $this->getDoctrine()->getManager()->getRepository(ReponseR
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+     * @Route("/ReponseReclamationlist",name="ReponseReclamationlist")
+     */
+
+     public function getReponseReclamations(SerializerInterface $serializer ){
+        $ReponseReclamations = $this->getDoctrine()->getManager()->getRepository(ReponseReclamation::class)->findAll();
+      
+        $json=$serializer->serialize($ReponseReclamations,'json',['groups'=>'ReponseReclamation']);
+        return new Response($json);
+    }
+
+    /**
+     * @Route("/registerReponseReclamation", name="registerReponseReclamation")
+     */
+    public function registerReponseReclamation( Request $request,SerializerInterface $serializer,EntityManagerInterface $manager){
+        $ReponseReclamation = new ReponseReclamation();
+
+
+        $ReponseReclamation->setSujet($request->query->get("sujet"));
+        
+        $ReponseReclamation->setEtat($request->query->get("etat"));
+        $ReponseReclamation->setDate(new DateTime());
+
+
+        $reclamation=$this->getDoctrine()->getRepository(Reclamation::class)->findOneBy(array('idRec'=>$request->query->get("id_reclamation")));
+        $ReponseReclamation->setIdReclamation($reclamation);
+        $manager->persist($ReponseReclamation);
+        $manager->flush();
+        $json=$serializer->serialize($ReponseReclamation,'json',['groups'=>'ReponseReclamation']);
+        return new Response($json);
+    }
+
+
+    
+   /**
+     * @Route("/updateReponseReclamationjson", name="updateReponseReclamationjson")
+     */
+    public function updateReponseReclamation( 
+        Request $request,
+        serializerInterface $serializer,
+        EntityManagerInterface $entityManager)
+        {
+    $ReponseReclamation = new ReponseReclamation();
+    $ReponseReclamation=$this->getDoctrine()->getRepository(ReponseReclamation::class)->findOneBy(array('idReponse'=>$request->query->get("id")));
+
+    $ReponseReclamation->setSujet($request->query->get("sujet"));
+        
+    $ReponseReclamation->setEtat($request->query->get("etat"));
+
+$entityManager->persist($ReponseReclamation);
+$entityManager->flush();
+
+ return new Response("success");
+
+}
+
+/**
+* @Route("/deleteReponseReclamatione", name="deleteuere")
+*/
+public function deleteReponseReclamatione( 
+        Request $request,
+        serializerInterface $serializer,
+        EntityManagerInterface $entityManager
+
+){
+
+    $ReponseReclamation=$this->getDoctrine()->getRepository(ReponseReclamation::class)->findOneBy(array('idReponse'=>$request->query->get("id")));
+    $em=$this->getDoctrine()->getManager();
+    $em->remove($ReponseReclamation);
+    $em->flush();
+    return new Response("success");
+   
+}
 
 }

@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * ReponseReclamation
  *
@@ -15,7 +17,7 @@ class ReponseReclamation
 {
     /**
      * @var int
-     *
+     *@Groups({"groups", "ReponseReclamation"})
      * @ORM\Column(name="id_reponse", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -26,7 +28,7 @@ class ReponseReclamation
      * @Assert\NotBlank(message=" sujet  est obligatoire")
      * @Assert\Type(type="string") 
      * @var string
-     *
+     *@Groups({"groups", "ReponseReclamation"})
      * @ORM\Column(name="sujet", type="string", length=255, nullable=false)
      */
     private $sujet;
@@ -35,21 +37,21 @@ class ReponseReclamation
      * @Assert\NotBlank(message=" etat  est obligatoire")
      * @Assert\Type(type="string") 
      * @var string
-     *
+     *@Groups({"groups", "ReponseReclamation"})
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)
      */
     private $etat;
 
     /**
      * @var \DateTime
-     *
+     *@Groups({"groups", "ReponseReclamation"})
      * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Reclamation
-     *
+     *@Groups({"groups", "ReponseReclamation"})
      * @ORM\ManyToOne(targetEntity="Reclamation")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_reclamation", referencedColumnName="id_rec")

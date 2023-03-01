@@ -6,7 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Utilisateur;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Reclamation
  *
@@ -17,7 +17,6 @@ class Reclamation
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id_rec", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -32,7 +31,7 @@ class Reclamation
      *     message="The value {{ value }} is not a valid uppercase text."
      * )
      * @var string
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="sujet", type="string", length=255, nullable=false)
      */
     private $sujet;
@@ -45,7 +44,7 @@ class Reclamation
      *     message="not_valid_email"
      * )
      * @var string
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
@@ -59,7 +58,7 @@ class Reclamation
      *
      *     ) 
      * @var string
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
@@ -68,21 +67,21 @@ class Reclamation
      * @Assert\NotBlank(message=" etat  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)
      */
     private $etat;
 
     /**
      * @var \DateTime
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="date", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $date ;
 
     /**
      * @var \Utilisateur
-     *
+     *@Groups({"groups", "Reclamation"})
      * @ORM\ManyToOne(targetEntity=Utilisateur::class)
      * @ORM\JoinColumn(nullable=false)
      */

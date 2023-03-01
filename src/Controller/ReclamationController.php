@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Reclamation;
+use App\Entity\Utilisateur;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,17 +36,46 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/addReclamation", name="addReclamation")
      */
-    public function addReclamation(Request $request): Response
+    public function addReclamation(Request $request,\Swift_Mailer $mailer): Response
     {
       
        $Reclamation=new Reclamation();
        $form=$this->createForm(ReclamationType::class,$Reclamation);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
+        $message = (new \Swift_Message('Hello new reclamation has been added'))
+        ->setFrom('yassine.boulares@esprit.tn')
+        ->setTo('yassine.boulares@esprit.tn')
+        ->setBody(
+            $this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/registration.html.twig',
+            ),
+            'text/html'
+        )
+
+    ;
+
+    $mailer->send($message);
         $Reclamation->setDate(new DateTime());
            $em = $this->getDoctrine()->getManager();
            $em->persist($Reclamation);
            $em->flush();
+           
+
+
+         
+
+
+
+
+
+
+
+
+
+
+
 
            return $this->redirectToRoute('displayreclamation');
        }
@@ -120,6 +150,111 @@ public function deleteReclamation(
         return $this->render('Reclamation/index.html.twig', [
             'b'=>$Reclamations
         ]);
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+     * @Route("/Reclamationlist",name="Reclamationlist")
+     */
+
+     public function getReclamations(SerializerInterface $serializer ){
+        $Reclamations = $this->getDoctrine()->getManager()->getRepository(Reclamation::class)->findAll();
+      
+        $json=$serializer->serialize($Reclamations,'json',['groups'=>'Reclamation']);
+        return new Response($json);
+    }
+
+    /**
+     * @Route("/registerReclamation", name="registerReclamation")
+     */
+    public function registerReclamation( Request $request,SerializerInterface $serializer,EntityManagerInterface $manager){
+        $Reclamation = new Reclamation();
+
+
+        $Reclamation->setEmail($request->query->get("email"));
+        
+        $Reclamation->setSujet($request->query->get("sujet"));
+        $Reclamation->setDescription($request->query->get("description"));
+        $Reclamation->setEtat($request->query->get("etat"));
+        $Reclamation->setDate(new DateTime());
+        $utilisateur=$this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id'=>$request->query->get("idUtilisateur")));
+        $Reclamation->setIdUtilisateur($utilisateur);
+        $manager->persist($Reclamation);
+        $manager->flush();
+        $json=$serializer->serialize($Reclamation,'json',['groups'=>'Reclamation']);
+        return new Response($json);
+    }
+
+
+    
+   /**
+     * @Route("/updateReclamationjson", name="updateReclamationjson")
+     */
+    public function updateReclamation( 
+        Request $request,
+        serializerInterface $serializer,
+        EntityManagerInterface $entityManager)
+        {
+    $Reclamation = new Reclamation();
+    $Reclamation=$this->getDoctrine()->getRepository(Reclamation::class)->findOneBy(array('idRec'=>$request->query->get("id")));
+
+
+    $Reclamation->setEmail($request->query->get("email"));
+        
+    $Reclamation->setSujet($request->query->get("sujet"));
+    $Reclamation->setDescription($request->query->get("description"));
+    $Reclamation->setEtat($request->query->get("etat"));
+$entityManager->persist($Reclamation);
+$entityManager->flush();
+
+ return new Response("success");
+
+}
+
+/**
+* @Route("/deleteReclamatione", name="deleteuere")
+*/
+public function deleteReclamatione( 
+        Request $request,
+        serializerInterface $serializer,
+        EntityManagerInterface $entityManager){
+
+    $Reclamation=$this->getDoctrine()->getRepository(Reclamation::class)->findOneBy(array('idRec'=>$request->query->get("id")));
+    $em=$this->getDoctrine()->getManager();
+    $em->remove($Reclamation);
+    $em->flush();
+    return new Response("success");
    
 }
 }
