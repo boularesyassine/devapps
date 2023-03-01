@@ -24,14 +24,14 @@ class UpdateProduitType extends AbstractType
             ->add('prix')
             ->add('quantite')
             ->add('id_categorie', EntityType::class, [
-                'class'=> Categorie::class,
+                'class' => Categorie::class,
                 'choice_label' => 'id'
             ])
-            ->add('save',SubmitType::class, [
+            ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ]
-            ])        ;
+            ]);
     }
 
 

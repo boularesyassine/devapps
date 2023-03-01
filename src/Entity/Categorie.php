@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * Categorie
  *
@@ -14,7 +16,7 @@ class Categorie
 {
     /**
      * @var int
-     *
+     *@Groups({"groups", "Categorie"})
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -25,7 +27,7 @@ class Categorie
      * @Assert\NotBlank(message=" nom obligatoire")
      * @Assert\Type(type="string") 
      * @var string
-     *
+     *@Groups({"groups", "Categorie"})
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
@@ -49,6 +51,6 @@ class Categorie
 
     public function __toString()
     {
-       return (string)$this->id ;
+        return (string)$this->id;
     }
 }

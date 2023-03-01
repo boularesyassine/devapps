@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Categorie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\CategorieType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CategorieController extends AbstractController
 {
@@ -23,9 +26,9 @@ class CategorieController extends AbstractController
      */
     public function afficherCategories(): Response
     {
-        $categories= $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+        $categories = $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
         return $this->render('categorie/index.html.twig', [
-            'b'=>$categories
+            'b' => $categories
         ]);
     }
 
@@ -34,73 +37,162 @@ class CategorieController extends AbstractController
      */
     public function addcategorie(Request $request): Response
     {
-      
-       $categorie=new categorie();
-       $form=$this->createForm(categorieType::class,$categorie);
-       $form->handleRequest($request);
-       if($form->isSubmitted() && $form->isValid()){
-           $em = $this->getDoctrine()->getManager();
-           $em->persist($categorie);
-           $em->flush();
 
-           return $this->redirectToRoute('displaycategorie');
-       }
-       else
-       return $this->render('categorie/ajoutercategorie.html.twig',['f'=>$form->createView()]);
+        $categorie = new categorie();
+        $form = $this->createForm(categorieType::class, $categorie);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($categorie);
+            $em->flush();
 
+            return $this->redirectToRoute('displaycategorie');
+        } else
+            return $this->render('categorie/ajoutercategorie.html.twig', ['f' => $form->createView()]);
     }
 
-      /**
+    /**
      * @Route("/displayfrontcategorie", name="displayfrontcategorie")
      */
     public function displayfrontcategorie(): Response
     {
-        $categories= $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+        $categories = $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
         return $this->render('categorie/indexfront.html.twig', [
-            'b'=>$categories
+            'b' => $categories
         ]);
     }
 
-    
+
     /**
      * @Route("/modifiercategorie/{id}", name="modifiercategorie")
      */
-    public function modifiercategorie(Request $request,$id): Response
+    public function modifiercategorie(Request $request, $id): Response
     {
-      
-       $categorie=$this->getDoctrine()->getManager()->getRepository(Categorie::class)->find($id);
-       $form=$this->createForm(CategorieType::class,$categorie);
-       $form->handleRequest($request);
-       if($form->isSubmitted() && $form->isValid()){
-    
-       
-           $em = $this->getDoctrine()->getManager();
-           
-           $em->flush();
 
-           return $this->redirectToRoute('displaycategorie');
-       }
-       else
-       return $this->render('categorie/modifiercategorie.html.twig',['f'=>$form->createView()]);
+        $categorie = $this->getDoctrine()->getManager()->getRepository(Categorie::class)->find($id);
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->flush();
+
+            return $this->redirectToRoute('displaycategorie');
+        } else
+            return $this->render('categorie/modifiercategorie.html.twig', ['f' => $form->createView()]);
     }
 
-      /**
-* @Route("/deletecategorie", name="deletecategorie")
-*/
-public function deletecategorie( 
-    Request $request,
-    
-){
+    /**
+     * @Route("/deletecategorie", name="deletecategorie")
+     */
+    public function deletecategorie(
+        Request $request,
 
-$categorie=$this->getDoctrine()->getRepository(Categorie::class)->findOneBy(array('id'=>$request->query->get("id")));
-$em=$this->getDoctrine()->getManager();
-$em->remove($categorie);
-$em->flush();
-$categories= $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
-return $this->render('categorie/index.html.twig', [
-    'b'=>$categories
-]);
-}
+    ) {
 
+        $categorie = $this->getDoctrine()->getRepository(Categorie::class)->findOneBy(array('id' => $request->query->get("id")));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+        $categories = $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+        return $this->render('categorie/index.html.twig', [
+            'b' => $categories
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @Route("/Categorielistjson",name="Categorielistjson")
+     */
+
+    public function getCategories(SerializerInterface $serializer)
+    {
+        $Categories = $this->getDoctrine()->getManager()->getRepository(Categorie::class)->findAll();
+
+        $json = $serializer->serialize($Categories, 'json', ['groups' => 'Categorie']);
+        return new Response($json);
+    }
+    /**
+     * @Route("/addCategoriejson", name="addCategoriejson")
+     */
+    public function registerCategorie(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager)
+    {
+        $Categorie = new Categorie();
+
+
+
+
+        $Categorie->setNom($request->query->get("nomcategorie"));
+
+
+        $manager->persist($Categorie);
+        $manager->flush();
+        $json = $serializer->serialize($Categorie, 'json', ['groups' => 'user']);
+        return new Response($json);
+    }
+
+
+
+
+    /**
+     * @Route("/updateCategorie", name="updateCategorie")
+     */
+    public function updateCategorie(
+        Request $request,
+        serializerInterface $serializer,
+        EntityManagerInterface $entityManager
+    ) {
+        $Categorie = new Categorie();
+        $Categorie = $this->getDoctrine()->getRepository(Categorie::class)->findOneBy(array('id' => $request->query->get("id")));
+
+        $Categorie->setNom($request->query->get("nomcategorie"));
+
+        $entityManager->persist($Categorie);
+        $entityManager->flush();
+
+        return new Response("success");
+    }
+
+    /**
+     * @Route("/deleteCategoriett", name="deletecateogoriet")
+     */
+    public function deleteCategoriet(Request $request, serializerInterface $serializer, EntityManagerInterface $entityManager)
+    {
+
+        $Categorie = $this->getDoctrine()->getRepository(Categorie::class)->findOneBy(array('id' => $request->query->get("id")));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($Categorie);
+        $em->flush();
+        return new Response("success");
+    }
 }

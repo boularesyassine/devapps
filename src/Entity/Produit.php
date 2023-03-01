@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Entity;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Categorie;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
+
 /**
  * Produit
  *
@@ -15,7 +20,7 @@ class Produit
 {
     /**
      * @var int
-     *
+     * 
      * @ORM\Column(name="id_produit", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,23 +29,23 @@ class Produit
 
     /**
      
-     * @Assert\NotBlank(message=" nom_produit obligatoire")
+     * @Assert\NotBlank(message=" nom du produit obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="nom_produit", type="string", length=255, nullable=false)
      */
     private $nomProduit;
 
     /**
-    * @Assert\NotBlank(message=" description obligatoire")
+     * @Assert\NotBlank(message=" description obligatoire")
      * @Assert\Length(
      *      min = 8,
-     *      minMessage=" Entrer un Description au mini de 8 caracteres"
+     *      minMessage=" Entrer une description au minimum de 8 caracteres"
      *
      *     ) 
      * @var string
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
@@ -49,11 +54,11 @@ class Produit
      * @Assert\NotBlank(message=" prix obligatoire")
      * @Assert\Type(type="float")
      * @var float
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-      * @Assert\Positive(message=" le prix doit etre positive!")
+     * @Assert\Positive(message=" le prix doit etre positive!")
      */
-    
+
     private $prix;
 
 
@@ -61,9 +66,9 @@ class Produit
      * @Assert\NotBlank(message=" quantite obligatoire")
      * @Assert\Type(type="integer")
      * @var int
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="quantite", type="integer", nullable=false)
-           * @Assert\Positive(message=" la quantité doit etre positive!")
+     * @Assert\Positive(message=" la quantité doit etre positive!")
 
      */
     private $quantite;
@@ -72,28 +77,31 @@ class Produit
      * @Assert\NotBlank(message=" photo obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="photo", type="string", length=255, nullable=false)
      */
     private $photo;
 
     /**
      * @var \DateTime
-     *
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date;
 
     /**
      *
-     *
-  * @ORM\ManyToOne(targetEntity=Categorie::class)
+     *@Groups({"groups", "Produit"})
+     * @ORM\ManyToOne(targetEntity=Categorie::class)
      * @ORM\JoinColumn(nullable=false)
      * })
      */
 
 
     private $idCategorie;
+
+
+    private $id_Categorie_id;
 
     public function id_produit(): ?int
     {
@@ -180,7 +188,12 @@ class Produit
         return $this;
     }
 
-  
+    public function setId_Categorie_id(?Categorie $idCategorie): self
+    {
+        $this->idCategorie = $idCategorie;
+
+        return $this;
+    }
 
     public function setIdCategorie(?Categorie $idCategorie): self
     {
@@ -192,6 +205,4 @@ class Produit
     {
         return $this->idCategorie;
     }
-
-
 }

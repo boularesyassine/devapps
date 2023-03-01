@@ -15,9 +15,7 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('save',SubmitType::class)
-
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

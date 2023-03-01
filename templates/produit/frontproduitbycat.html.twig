@@ -19,7 +19,8 @@
 						quantite :
 						{{  produit.quantite }}</p>
 					<p>
-						<img src="uploads/{{  produit.photo }}" height="100" width="100">
+						<img src=" {{ absolute_url('/uploads/'{{  produit.photo }}) }}" height="100" width="100">
+                       
 					</p>
 					<p>
 						date :
@@ -32,6 +33,6 @@
 			</div>
 		{% endfor %}
 	</div>
-
+  
 
 {% endblock %}

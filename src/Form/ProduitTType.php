@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+
 class ProduitTType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -20,33 +21,36 @@ class ProduitTType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('quantite')
-            ->add('photo', FileType::class,
-            array(
-                'required'=>true,
+            ->add(
+                'photo',
+                FileType::class,
+                array(
+                    'required' => true,
 
-                'attr' => array(
-                    'accept' => "image/jpeg, image/png"
-                ),
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2M',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a JPG or PNG',
+                    'attr' => array(
+                        'accept' => "image/jpeg, image/png"
+                    ),
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '2M',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                            ],
+                            'mimeTypesMessage' => 'SVP entrer un JPG ou PNG',
                         ])
-                        ]
-                    ))
+                    ]
+                )
+            )
             ->add('id_categorie', EntityType::class, [
-                'class'=> Categorie::class,
+                'class' => Categorie::class,
                 'choice_label' => 'id'
             ])
-            ->add('save',SubmitType::class, [
+            ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ]
-            ])        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
