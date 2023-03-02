@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 use App\Entity\Publicite;
+use App\Entity\Rating;
+use App\Entity\Utilisateur;
+use PDO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface ;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\PubliciteType;
 use App\Form\UpdatepubliciteType;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PubliciteController extends AbstractController
 {
@@ -30,6 +35,52 @@ class PubliciteController extends AbstractController
             'b'=>$publicites
         ]);
     }
+
+
+
+
+ /**
+     * @Route("/showrand", name="showrand")
+     */
+    public function showrand(EntityManagerInterface $em): Response
+    {
+        $sql = "SELECT * FROM publicite ORDER BY RAND() LIMIT 1";
+            $stmt = $em->getConnection()->prepare($sql);
+            $result = $stmt->execute();
+            $values = $result->fetch(PDO::FETCH_ASSOC);
+            $publicite = new Publicite();
+            $publicite->setId($values['id']);
+            $publicite->setNomPub($values['nom_pub']);
+            $publicite->setDescription($values['description']);
+            $publicite->setImage($values['image']);
+
+        return $this->render('publicite/showrandpub.html.twig', [
+            'b'=>$publicite
+        ]);
+    }
+
+
+      /**
+     * @Route("/rate", name="rating")
+     */
+    public function rate(Request $request,EntityManagerInterface $entityManagerInterface,SerializerInterface $serializer): Response
+    {
+       $rate=new Rating();
+       $user=$entityManagerInterface->getRepository(Utilisateur::class)->findOneBy(array('id'=>"1"));
+            $rate->setRate($request->query->get("rate"));
+            $rate->setIduser($user);
+           $entityManagerInterface->persist($rate);
+           $entityManagerInterface->flush();
+           $json= new JsonResponse();
+   
+    
+           return $json;
+   }
+       
+
+ 
+
+
     /**
      * @Route("/addpublicite", name="addpub")
      */

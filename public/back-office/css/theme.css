@@ -48,6 +48,7 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
     box-sizing: border-box;
 }
 
+
 ul {
     margin: 0;
 }
@@ -258,6 +259,7 @@ section {
     .section__content--p30 {
         padding: 0;
     }
+    
 }
 
 .section__content--p35 {
