@@ -34,6 +34,7 @@ class ReponseReclamationController extends AbstractController
     public function afficherReponseReclamations(): Response
     {
         $ReponseReclamations= $this->getDoctrine()->getManager()->getRepository(ReponseReclamation::class)->findAll();
+
         return $this->render('Reponse_reclamation/index.html.twig', [
             'b'=>$ReponseReclamations
         ]);
@@ -81,6 +82,11 @@ class ReponseReclamationController extends AbstractController
            $em = $this->getDoctrine()->getManager();
            
            $em->persist($ReponseReclamation);
+           $em->flush();
+
+           $reclamation->setEtat("traité");
+  
+           $em->persist($reclamation);
            $em->flush();
 
            return $this->redirectToRoute('displayReponseReclamation');

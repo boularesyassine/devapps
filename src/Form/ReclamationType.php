@@ -19,7 +19,6 @@ class ReclamationType extends AbstractType
             ->add('sujet')
             ->add('email')
             ->add('description')
-            ->add('etat')
             ->add('idUtilisateur', EntityType::class, [
                 'class'=> Utilisateur::class,
                 'choice_label' => 'id'

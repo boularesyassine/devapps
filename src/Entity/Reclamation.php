@@ -64,8 +64,6 @@ class Reclamation
     private $description;
 
     /**
-     * @Assert\NotBlank(message=" etat  est obligatoire")
-     * @Assert\Type(type="string")
      * @var string
      *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)

@@ -8,7 +8,10 @@
         
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-        
+         {{ form_start(f, {'attr': {'id': 'search-form'}}) }}
+       {{ form_widget(f.searchQuery,{'attr': {'id': 'querry'}}) }}
+        {{ form_widget(f.orderby,{'attr': {'id': 'order'}}) }}
+    {{ form_end(f) }}
 <div class="table-responsive" >
 <table class="table">
   <thead>
@@ -25,7 +28,7 @@
       <th scope="col">action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="bac-table">
     {% for reclamation in b %}
     <tr>
      
@@ -50,4 +53,71 @@
   </tbody>
 </table>
 </div>
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{ encore_entry_script_tags('app') }}
+
+
+<script> 
+$(document).ready(function() {
+    var typingTimer; // timer identifier
+    var doneTypingInterval = 500; // time in ms
+
+    $('#search-form').on('keyup', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    $('#search-form').on('keydown', function() {
+        clearTimeout(typingTimer);
+    });
+
+    function doneTyping() {
+        var form = $('#search-form');
+        var url = form.attr('action');
+        var formData = form.serialize();
+        $('#bac-table').html('<p>Loading...</p>');
+        $.ajax({
+            url: "http://127.0.0.1:8000/search",
+            type: 'GET',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                $('#bac-table').html(response.results);
+            },
+            error: function(xhr, status, error) {
+                $('#bac-table').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    }
+
+  $('#search-form').on('change', function() {
+        var form = $('#search-form');
+        var url = form.attr('action');
+        var formData = form.serialize();
+        $('#bac-table').html('<p>Loading...</p>');
+        $.ajax({
+            url: "http://127.0.0.1:8000/search",
+            type: 'GET',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                $('#bac-table').html(response.results);
+            },
+            error: function(xhr, status, error) {
+                $('#bac-table').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    });
+
+
+});
+</script>
+
 {% endblock %}

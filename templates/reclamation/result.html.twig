@@ -1,0 +1,23 @@
+ {% block body %}
+
+{% for reclamation in b %}
+    <tr>
+     
+    <td> {{ reclamation.id_rec }}</td> 
+     <td> {{ reclamation.sujet}} </td> 
+   
+       <td>{{  reclamation.email}}</td> 
+        <td>{{  reclamation.description}} </td> 
+         <td>{{  reclamation.etat }}</td> 
+          <td>{{  reclamation.date|date('d-m-Y')  }}</td> 
+        
+             <td> 
+               <a href="{{path('addReponsefromrec',{'id':reclamation.id_rec}) }}">ajouter reponse</a>
+               <a href="{{path('modifierRecla',{'id':reclamation.id_rec}) }}">modifier </a>
+               <a href="{{path('deleteRecla',{'idRec':reclamation.id_rec}) }}">supprimer </a>
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+       {% endblock %}

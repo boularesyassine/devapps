@@ -9,9 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReclamationType;
+use App\Form\SearchFormType;
+
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
+use PDO;
+
 class ReclamationController extends AbstractController
 {
     #[Route('/reclamation', name: 'app_reclamation')]
@@ -27,11 +31,57 @@ class ReclamationController extends AbstractController
      */
     public function afficherreclamation(): Response
     {
+        $form=$this->createForm(SearchFormType::class);
+
         $Reclamations= $this->getDoctrine()->getManager()->getRepository(Reclamation::class)->findAll();
         return $this->render('Reclamation/index.html.twig', [
-            'b'=>$Reclamations
+            'b'=>$Reclamations,
+            'f'=>$form->createView()
         ]);
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * @Route("/stats", name="stats")
+     */
+    public function statistiques(EntityManagerInterface $em){
+        $dates = [];
+        $produitCount = [];
+        $categColor = [];
+       
+        $sql = "SELECT EXTRACT(year FROM date) AS year , COUNT(id_rec) as t FROM reclamation GROUP BY year;";
+        $stmt = $em->getConnection()->prepare($sql);
+   
+        $result = $stmt->execute();
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $dates[] = $row["year"];
+            $produitCount[] = $row["t"];
+        }
+    
+        // On va chercher toutes les catégories
+   
+       
+      
+  
+  
+        return $this->render('reclamation/stat.html.twig', [
+            'dates' => json_encode($dates),
+            'produitCount' => json_encode($produitCount),
+        ]);
+  
+  
+    }
+
+
+
+
 
     /**
      * @Route("/addReclamation", name="addReclamation")
@@ -43,7 +93,8 @@ class ReclamationController extends AbstractController
        $form=$this->createForm(ReclamationType::class,$Reclamation);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
-        $message = (new \Swift_Message('Hello new reclamation has been added'))
+        $Reclamation->setEtat("en cours");
+        $message = (new \Swift_Message('Hello new reclamation has been added  please wait from the response'))
         ->setFrom('yassine.boulares@esprit.tn')
         ->setTo('yassine.boulares@esprit.tn')
         ->setBody(
@@ -59,7 +110,7 @@ class ReclamationController extends AbstractController
     $mailer->send($message);
         $Reclamation->setDate(new DateTime());
            $em = $this->getDoctrine()->getManager();
-           $em->persist($Reclamation);
+           $em->persist($Reclamation); 
            $em->flush();
            
 
@@ -97,6 +148,7 @@ class ReclamationController extends AbstractController
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
         $Reclamation->setDate(new DateTime());
+        $Reclamation->setEtat("en cours");
 
            $em = $this->getDoctrine()->getManager();
            $em->persist($Reclamation);
@@ -146,14 +198,53 @@ public function deleteReclamation(
     
     $entityManager->remove($reclamation);
     $entityManager->flush();
-    $Reclamations= $this->getDoctrine()->getManager()->getRepository(Reclamation::class)->findAll();
-        return $this->render('Reclamation/index.html.twig', [
-            'b'=>$Reclamations
-        ]);
+    return $this->redirectToRoute('displayreclamation');
+
    
 }
 
 
+/**
+ * @Route("/search", name="search")
+ */
+public function search(Request $request,SerializerInterface $serializer)
+{
+    $em = $this->getDoctrine()->getManager();
+    $bacRepository = $em->getRepository(Reclamation::class);
+  // deserialize the form data into an array
+  $search = $request->query->get('search_form');
+  $query= $search["searchQuery"];
+  $sort = $search["orderby"];
+  // retrieve the search query from the 'query' attribute
+    $queryBuilder = $bacRepository->createQueryBuilder('b');
+    
+    $search = $request->query->get('searchQuery');
+   
+
+    
+    
+        $queryBuilder->where('b.sujet LIKE :search OR b.email LIKE :search OR b.description LIKE :search OR b.etat LIKE :search OR b.date LIKE :search')
+                     ->setParameter('search', "%$query%");
+    
+    
+    if ($sort ) {
+        $queryBuilder->orderBy("b.$sort","ASC");
+    }
+    
+    $result = $queryBuilder->getQuery()->getResult();
+    $json=$serializer->serialize($result,'json',['groups'=>'bac']);
+   
+    
+    return $this->json([
+        'results' => $this->renderView('reclamation/result.html.twig', [
+            'b' => $result,
+           
+            
+        ]),
+    
+       
+    ]);
+}
 
 
 
