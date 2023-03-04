@@ -62,7 +62,7 @@ something.onclick = function() {
  let text;
   if (confirm("confirm your rate") == true) {
     $.ajax({
-            url: "http://127.0.0.1:8000/rate?rate="+elements,
+            url: "http://127.0.0.1:8000/rate?rate="+elements+"&idpub="+{{  b.id }},
             type: 'GET',
             success: function(response) {
       window.location.assign("../ee");

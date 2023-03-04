@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Sponsor;
+use App\Form\SearchFormType;
 use App\Form\SponsorType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SponsorController extends AbstractController
 {
@@ -29,8 +31,10 @@ class SponsorController extends AbstractController
     public function afficherSponsors(EntityManagerInterface $em): Response
     {
         $Sponsors= $em->getRepository(Sponsor::class)->findAll();
+        $form=$this->createForm(SearchFormType::class);
         return $this->render('sponsor/index.html.twig', [
-            'b'=>$Sponsors
+            'b'=>$Sponsors,
+            'f'=>$form->createView()
         ]);
     }
     /**
@@ -89,6 +93,59 @@ public function deleteSponsor(Request $request, EntityManagerInterface $entityMa
             'b'=>$Sponsor
         ]);
 }
+
+
+
+
+
+
+/**
+ * @Route("/search", name="search")
+ */
+public function search(Request $request,SerializerInterface $serializer,EntityManagerInterface $em)
+{
+   
+    $soponsorRepository = $em->getRepository(Sponsor::class);
+  // deserialize the form data into an array
+  $search = $request->query->get('search_form');
+
+  $query= $search["searchQuery"];
+  $sort = $search["orderby"];
+
+  // retrieve the search query from the 'query' attribute
+    $queryBuilder = $soponsorRepository->createQueryBuilder('b');
+    
+    $search = $request->query->get('searchQuery');
+   
+
+    
+    
+        $queryBuilder->where('b.nom LIKE :search OR b.adresse LIKE :search OR b.email LIKE :search ')
+                     ->setParameter('search', "%$query%");
+    
+    
+    if ($sort ) {
+        $queryBuilder->orderBy("b.$sort","ASC");
+    }
+    
+    $result = $queryBuilder->getQuery()->getResult();
+    $json=$serializer->serialize($result,'json',['groups'=>'Sponsor']);
+   
+    
+    return $this->json([
+        'results' => $this->renderView('sponsor/result.html.twig', [
+            'b' => $result,
+           
+            
+        ]),
+    
+       
+    ]);
+}
+
+
+
+
 
 }
 

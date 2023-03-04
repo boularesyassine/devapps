@@ -67,8 +67,11 @@ class PubliciteController extends AbstractController
     {
        $rate=new Rating();
        $user=$entityManagerInterface->getRepository(Utilisateur::class)->findOneBy(array('id'=>"1"));
+       $pub=$entityManagerInterface->getRepository(Publicite::class)->findOneBy(array('id'=>$request->query->get("idpub")));
+
             $rate->setRate($request->query->get("rate"));
             $rate->setIduser($user);
+            $rate->setIdpub($pub);
            $entityManagerInterface->persist($rate);
            $entityManagerInterface->flush();
            $json= new JsonResponse();
@@ -153,6 +156,60 @@ return $this->render('publicite/index.html.twig', [
 ]);
 
 }
+
+
+
+
+
+/**
+     * @Route("/stats", name="stats")
+     */
+    public function statistiques(EntityManagerInterface $em){
+        $dates = [];
+        $produitCount = [];
+        $categColor = [];
+       
+        $sql = "SELECT nom_pub , id FROM publicite";
+        $stmt = $em->getConnection()->prepare($sql);
+        $result = $stmt->execute();
+
+
+
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $dates[] = $row["nom_pub"];
+            $produitCount[] = $row["id"];
+            $sql2 = "SELECT SUM(rate)  as rate from rating where idpub=".strval($row["id"]) ;
+             $stmt2 = $em->getConnection()->prepare($sql2);
+            $result2 = $stmt2->execute();
+            $row2 = $result2->fetch(PDO::FETCH_ASSOC);
+            if($row2["rate"]==null)
+            {
+                $categColor[]=0;
+            }
+            else
+            $categColor[] = $row2["rate"];
+ 
+        }
+    
+        // On va chercher toutes les catégories
+   
+       
+      
+  
+  
+        return $this->render('publicite/stat.html.twig', [
+            'dates' => json_encode($dates),
+            'produitCount' => json_encode($categColor),
+        ]);
+  
+  
+    }
+
+
+
+
+
+
 
 
 

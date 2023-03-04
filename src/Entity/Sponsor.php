@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Sponsor
@@ -15,7 +17,7 @@ class Sponsor
 {
     /**
      * @var int
-     *
+     *@Groups({"groups", "Sponsor"})
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -26,7 +28,7 @@ class Sponsor
     * @Assert\NotBlank(message=" nom  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Sponsor"})
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
@@ -35,7 +37,7 @@ class Sponsor
     * @Assert\NotBlank(message=" adresse  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Sponsor"})
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
      */
     private $adresse;
@@ -48,7 +50,7 @@ class Sponsor
      *     message="not_valid_email"
      * )
      * @var string
-     *
+     *@Groups({"groups", "Sponsor"})
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
@@ -57,7 +59,7 @@ class Sponsor
     * @Assert\NotBlank(message=" num_tel  est obligatoire")
      * @Assert\Type(type="integer") 
      * @var int
-     *
+     *@Groups({"groups", "Sponsor"})
      * @ORM\Column(name="num_tel", type="integer", nullable=false)
      */
     private $numTel;

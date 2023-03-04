@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rating
  *
- * @ORM\Table(name="rating", indexes={@ORM\Index(name="ffa", columns={"iduser"})})
+ * @ORM\Table(name="rating", indexes={@ORM\Index(name="ff2", columns={"idpub"}), @ORM\Index(name="ffa", columns={"iduser"})})
  * @ORM\Entity
  */
 class Rating
@@ -27,6 +27,16 @@ class Rating
      * @ORM\Column(name="rate", type="integer", nullable=false)
      */
     private $rate;
+
+    /**
+     * @var \Publicite
+     *
+     * @ORM\ManyToOne(targetEntity="Publicite")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idpub", referencedColumnName="id")
+     * })
+     */
+    private $idpub;
 
     /**
      * @var \Utilisateur
@@ -51,6 +61,18 @@ class Rating
     public function setRate(int $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getIdpub(): ?Publicite
+    {
+        return $this->idpub;
+    }
+
+    public function setIdpub(?Publicite $idpub): self
+    {
+        $this->idpub = $idpub;
 
         return $this;
     }
