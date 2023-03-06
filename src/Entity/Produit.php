@@ -205,4 +205,9 @@ class Produit
     {
         return $this->idCategorie;
     }
+
+    public function __toString()
+    {
+        return (string)$this->id_produit();
+    }
 }

@@ -8,7 +8,8 @@
 			<div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: zoomIn;">
 				<div class="service-item d-flex flex-column justify-content-center text-center rounded">
 					<div class="service-icon flex-shrink-0">
-						<i class="fa fa-home fa-2x"></i>
+				 <a href="{{path('ajouterfavorie',{'id':produit.id}) }}"> <i class="bi bi-heart"></i></a> 
+
 					</div>
 					<h5 class="mb-3">{{ produit.nom_produit}}
 					</h5>
@@ -27,7 +28,7 @@
 					<p>
 						description :
 						{{  produit.description }}</p>
-					<a class="btn px-3 mt-auto mx-auto" href="">demande</a>
+					<a class="btn px-3 mt-auto mx-auto" href="{{path('ajouterdemande',{'id':produit.id}) }}">demande</a>
 				</div>
 			</div>
 		{% endfor %}

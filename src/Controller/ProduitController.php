@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\Demande;
+use App\Entity\Favorie;
 use App\Entity\Produit;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +43,55 @@ class ProduitController extends AbstractController
         ]);
     }
 
+
+  /**
+     * @Route("/affiherfavorieutlisateur", name="affiherfavorieutlisateur")
+     */
+    public function affiherfavorieutlisateur(Request $request): Response
+    {
+        $favorie = $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
+        $utlisateur = new Utilisateur();
+         $utlisateur = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => $request->query->get("id")));
+        $dd = $this->getDoctrine()->getRepository(Favorie::class)->findAll(array('id' => $utlisateur->getId()));
+
+
+    foreach ($dd as $valeur) {
+        $product =$this->getDoctrine()->getRepository(Produit::class)->findAll(array('id' => $valeur->getIdproduit()->getid()));
+    }
+
+        return $this->render('produit/listfavoriefront.html.twig', [
+            'b' => $product
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/displaydemande", name="displaydemande")
+     */
+    public function displaydemande(): Response
+    {
+        $demande = $this->getDoctrine()->getManager()->getRepository(Demande::class)->findAll();
+        
+
+        return $this->render('produit/demande.html.twig', [
+            'b' => $demande
+        ]);
+    }
+
+
+      /**
+     * @Route("/diplayfavorie", name="diplayfavorie")
+     */
+    public function diplayfavorie(): Response
+    {
+        $favorie = $this->getDoctrine()->getManager()->getRepository(Favorie::class)->findAll();
+        
+
+        return $this->render('produit/favorie.html.twig', [
+            'b' => $favorie
+        ]);
+    }
     /**
      * @Route("/displayfront", name="displayfront")
      */
@@ -174,6 +226,55 @@ public function search(Request $request,SerializerSerializerInterface $serialize
     ]);
 }
 
+/**
+     * @Route("/ajouterdemande", name="ajouterdemande")
+     */
+    public function ajouterdemande(Request $request): Response
+    {
+
+     $Demande = new Demande();
+        $Produit = $this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('idProduit' => $request->query->get("id")));
+        $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => "1"));
+            $Demande->setDate(new DateTime());
+
+            $Demande->setIdproduit($Produit);
+            $Demande->setIdutilisateur($user);
+        
+        
+    
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($Demande);
+            $em->flush();
+
+   
+            return $this->redirectToRoute('displaydemande');
+    }
+
+
+
+    /**
+     * @Route("/ajouterfavorie", name="ajouterfavorie")
+     */
+    public function ajouterfavorie(Request $request): Response
+    {
+
+     $favorie = new Favorie();
+        $Produit = $this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('idProduit' => $request->query->get("id")));
+        $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => "1"));
+            $favorie->setDate(new DateTime());
+
+            $favorie->setIdproduit($Produit);
+            $favorie->setIdutilisateur($user);
+        
+        
+    
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($favorie);
+            $em->flush();
+
+   
+            return $this->redirectToRoute('diplayfavorie');
+    }
 
 
 

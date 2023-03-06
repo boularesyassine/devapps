@@ -1,0 +1,55 @@
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+
+	<!-- Quick Action Toolbar Starts-->
+
+	<!-- Quick Action Toolbar Ends-->
+
+	<!-- content-wrapper ends -->
+	<!-- partial:partials/_footer.html -->
+
+		<div class="table-responsive"> <table class="table">
+			<thead>
+				<tr>
+					<th scope="col">id</th>
+					<th scope="col">idutilisateur </th>
+
+					<th scope="col">idproduit </th>
+
+					<th scope="col">date</th>
+
+				</tr>
+			</thead>
+			<tbody id="bac-table">
+				{% for demande in b %}
+					<tr>
+
+						<td>
+							{{ demande.id }}</td>
+						<td>
+							{{ demande.idutilisateur}}
+						</td>
+
+						<td>{{  demande.idproduit }}</td>
+						
+						
+
+						<td>
+							{{ demande.date|date('d-m-Y') }}</td>
+						
+
+
+						
+
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+
+{% endblock %}
