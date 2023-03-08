@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,9 +50,9 @@ class ReponseOffre
     private $date = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \AppelOffre
+     * @var \Appeloffre
      *
-     * @ORM\ManyToOne(targetEntity="AppelOffre")
+     * @ORM\ManyToOne(targetEntity="Appeloffre")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_offre", referencedColumnName="id")
      * })
@@ -113,12 +112,12 @@ class ReponseOffre
         return $this;
     }
 
-    public function getIdOffre(): ?AppelOffre
+    public function getIdOffre(): ?Appeloffre
     {
         return $this->idOffre;
     }
 
-    public function setIdOffre(?AppelOffre $idOffre): self
+    public function setIdOffre(?Appeloffre $idOffre): self
     {
         $this->idOffre = $idOffre;
 

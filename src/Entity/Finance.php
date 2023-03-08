@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Finance
@@ -13,9 +15,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Finance
 {
-    /**
+    /** 
      * @var int
-     *
+     * @Groups("finance")
+
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,49 +27,59 @@ class Finance
 
     /**
      * @var float
-     *
+     * @Groups("finance")
+     * @Assert\NotBlank(message=" taxe   est obligatoire")
+     * @Assert\Type(type="float")
      * @ORM\Column(name="taxe", type="float", precision=10, scale=0, nullable=false)
      */
     private $taxe;
 
     /**
      * @var int
-     *
+     * @Groups("finance")
+     * @Assert\NotBlank(message=" tva   est obligatoire")
+     * @Assert\Type(type="integer")
      * @ORM\Column(name="tva", type="integer", nullable=false)
      */
     private $tva;
 
     /**
      * @var string
-     *
+     * @Groups("finance")
+     * @Assert\NotBlank(message=" photo   est obligatoire")
+     * @Assert\Type(type="string")
      * @ORM\Column(name="photo", type="string", length=255, nullable=false)
      */
     private $photo;
 
     /**
      * @var float
-     *
+     * @Groups("finance")
+     * @Assert\NotBlank(message=" prix   est obligatoire")
+     * @Assert\Type(type="float")
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
      */
     private $prix;
 
     /**
      * @var string
-     *
+     * @Groups("finance")
+     * @Assert\NotBlank(message=" etat   est obligatoire")
+     * @Assert\Type(type="string")
      * @ORM\Column(name="etat", type="string", length=255, nullable=false)
      */
     private $etat;
 
     /**
      * @var \DateTime
-     *
+     * @Groups("finance")
      * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date;
 
     /**
      * @var \Facture
-     *
+     * @Groups("finance")
      * @ORM\ManyToOne(targetEntity="Facture")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_facture", referencedColumnName="id_facture")
@@ -74,11 +87,24 @@ class Finance
      */
     private $idFacture;
 
+     /**
+     * @var int
+     * @Groups("finance")
+     * 
+     */   
+    private $ide;
+    
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+  
+    public function getide(): ?int
+    {
+        return $this->idFacture->getIdFacture();
+    }
     public function getTaxe(): ?float
     {
         return $this->taxe;
@@ -152,6 +178,10 @@ class Finance
     }
 
     public function getIdFacture(): ?Facture
+    {
+        return $this->idFacture;
+    }
+    public function id_facture(): ?Facture
     {
         return $this->idFacture;
     }

@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AppelOffre
+ * Appeloffre
  *
- * @ORM\Table(name="appel_offre", indexes={@ORM\Index(name="fk10", columns={"id_categorie"}), @ORM\Index(name="fk1", columns={"id_utilisateur"})})
+ * @ORM\Table(name="appeloffre", indexes={@ORM\Index(name="fk1", columns={"id_utilisateur"}), @ORM\Index(name="fk10", columns={"id_categorie"})})
  * @ORM\Entity
  */
-class AppelOffre
+class Appeloffre
 {
     /**
      * @var int
@@ -34,7 +33,7 @@ class AppelOffre
      *
      * @ORM\Column(name="quantitÃ©", type="integer", nullable=false)
      */
-    private $quantitÃ©;
+    private $quantitã©;
 
     /**
      * @var float
@@ -94,14 +93,14 @@ class AppelOffre
         return $this;
     }
 
-    public function getQuantitÃ©(): ?int
+    public function getQuantitã©(): ?int
     {
-        return $this->quantitÃ©;
+        return $this->quantitã©;
     }
 
-    public function setQuantitÃ©(int $quantitÃ©): self
+    public function setQuantitã©(int $quantitã©): self
     {
-        $this->quantitÃ© = $quantitÃ©;
+        $this->quantitã© = $quantitã©;
 
         return $this;
     }

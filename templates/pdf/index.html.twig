@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau des Produits</title>
+</head>
+<body >
+<h2 style="text-align: center">Tableau des dons</h2>
+
+<table border="1">
+    <thead>
+     <tr>
+                <th>Id</th>
+                <th>Id_ben</th>
+                <th>Titre</th>
+                <th>Qte</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Id_local</th>
+                <th>Image</th>
+
+               
+            </tr>
+    </thead>
+    <tbody>
+    {% for Facture in b %}
+    <tr>
+     
+    <td> {{ Facture.id }}</td> 
+     <td> {{ Facture.numero}} </td> 
+   
+       <td>{{  Facture.nom }}</td> 
+        <td>{{  Facture.prix}} </td> 
+         <td>{{  Facture.date|date('d-m-Y')  }}</td> 
+          <td>{{  Facture.etat }}</td> 
+           <td> {{ Facture.description}}</td> 
+            <td> <img src"uploads/{{  Facture.image }}" height="100" width="100"></td> 
+          <td>{{  Facture.id_utilisateur }}</td> 
+             
+  
+      {% endfor %}
+
+    </tbody>
+</table>
+
+
+</body>
+</html>

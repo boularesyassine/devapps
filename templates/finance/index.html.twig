@@ -1,0 +1,56 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id  </th>
+      <th scope="col">taxe</th>
+   
+      <th scope="col">tva</th>
+
+      <th scope="col">photo</th>
+      <th scope="col">prix</th>
+      <th scope="col">etat</th>
+      <th scope="col">date</th>
+            <th scope="col">id_facture </th>
+     
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for Finance in b %}
+    <tr>
+     
+    <td> {{ Finance.id }}</td> 
+     <td> {{ Finance.taxe}} </td> 
+   
+       <td>{{  Finance.tva }}</td> 
+        <td>{{  Finance.photo}} </td> 
+         <td>{{  Finance.prix  }}</td> 
+          <td>{{  Finance.etat }}</td> 
+           <td> {{ Finance.date|date('d-m-Y')}}</td> 
+            <td>{{  Finance.id }}</td> 
+     
+             <td> 
+            <a href="{{path('modifierFinance',{'id':Finance.id}) }}">modifier </a>
+               <a href="{{path('deleteFinance',{'id':Finance.id}) }}">supprimer </a>
+             
+             
+              </td> 
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

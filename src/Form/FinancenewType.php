@@ -2,32 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\ReponseReclamation;
+use App\Entity\Finance;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-class ReponcenewType extends AbstractType
+class FinancenewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('sujet')
+            ->add('taxe')
+            ->add('tva')
+            ->add('photo')
+            ->add('prix')
             ->add('etat')
-            ->add('save',SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
-            ])
-  
+            ->add('date')
+            ->add('ajouter',SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ReponseReclamation::class,
+            'data_class' => Finance::class,
         ]);
     }
 }

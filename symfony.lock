@@ -38,6 +38,18 @@
             "./migrations/.gitignore"
         ]
     },
+    "knplabs/knp-snappy-bundle": {
+        "version": "1.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
+        },
+        "files": [
+            "./config/packages/knp_snappy.yaml"
+        ]
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -89,7 +101,7 @@
         ]
     },
     "symfony/flex": {
-        "version": "2.2",
+        "version": "1.19",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -132,7 +144,7 @@
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.48",
+        "version": "1.43",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -214,20 +226,6 @@
         },
         "files": [
             "./config/packages/security.yaml"
-        ]
-    },
-    "symfony/swiftmailer-bundle": {
-        "version": "3.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "2.5",
-            "ref": "f0b2fccdca2dfd97dc2fd5ad216d5e27c4f895ac"
-        },
-        "files": [
-            "./config/packages/dev/swiftmailer.yaml",
-            "./config/packages/swiftmailer.yaml",
-            "./config/packages/test/swiftmailer.yaml"
         ]
     },
     "symfony/translation": {

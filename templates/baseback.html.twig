@@ -45,8 +45,8 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a  style="background:#808080;" href="index.html">
-                            <img  src="{{asset('back-office/images/icon/logo1.png')}}" alt="CoolAdmin" />
+                        <a class="logo" href="index.html">
+                            <img src="{{asset('back-office/images/icon/logo.png')}}" alt="CoolAdmin" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -159,9 +159,9 @@
 
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo" style="background:#808080;" >
+            <div class="logo">
                 <a href="#">
-                    <img  src="{{asset('back-office/images/icon/logo1.png')}}" alt="Cool Admin" />
+                    <img src="{{asset('back-office/images/icon/logo.png')}}" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -169,23 +169,16 @@
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>gestion reclamation</a>
+                                <i class="fas fa-tachometer-alt"></i>gestion facture</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="{{path('displayreclamation') }}">afficher reclamation</a>
+                                    <a href="{{path('displayFacture') }}">afficher facture</a>
                                 </li>
 
                             </ul>
                               <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="{{path('addReclamation') }}">ajouter reclamation</a>
-                                </li>
-
-
-                            </ul>
-                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="{{path('stats') }}">statistique</a>
+                                    <a href="{{path('addfactures') }}">ajouter facture</a>
                                 </li>
 
                             </ul>
@@ -194,28 +187,25 @@
                     </ul>
 
 
-
-                      <ul class="list-unstyled navbar__list">
+                        <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>gestion reponse</a>
+                                <i class="fas fa-tachometer-alt"></i>gestion finance</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="{{path('displayReponseReclamation') }}">afficher reponse</a>
+                                    <a href="{{path('displayFinance') }}">afficher finance</a>
                                 </li>
 
                             </ul>
                               <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="{{path('addReponse') }}">ajouter reponse</a>
+                                    <a href="{{path('addFinances') }}">ajouter finance</a>
                                 </li>
 
                             </ul>
                         </li>
 
                     </ul>
-
-
 
 
 
@@ -242,23 +232,23 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="{{asset('back-office/images/icon/yass1.png')}}" alt="John Doe" />
+                                            <img src="{{asset('back-office/images/icon/avatar-01.jpg')}}" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Boulares Yassine</a>
+                                            <a class="js-acc-btn" href="#">john doe</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="{{asset('back-office/images/icon/yass1.png')}}" alt="John Doe" />
+                                                        <img src="{{asset('back-office/images/icon/avatar-01.jpg')}}" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">boulares yassine</a>
+                                                        <a href="#">john doe</a>
                                                     </h5>
-                                                    <span class="email">boulares.yassine@wastanet.com</span>
+                                                    <span class="email">johndoe@example.com</span>
                                                 </div>
                                             </div>
                                         
@@ -311,6 +301,7 @@
     </script>
     <script src="{{asset('back-office/vendor/circle-progress/circle-progress.min.js')}}"></script>
     <script src="{{asset('back-office/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{asset('back-office/vendor/chartjs/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('back-office/vendor/select2/select2.min.js')}}">
     </script>
 
