@@ -59,13 +59,27 @@ class ReponseReclamation
      */
     private $idReclamation;
 
+
+
+    /**
+     * @var int
+     *@Groups({"groups", "ReponseReclamation"})
+     */
+    private $idRe;
     public function getIdReponse(): ?int
     {
         return $this->idReponse;
     }
+
+
     public function id_reponse(): ?int
     {
         return $this->idReponse;
+    }
+
+    public function getidRe(): ?int
+    {
+        return $this->idReclamation->getidRec();
     }
     public function getSujet(): ?string
     {

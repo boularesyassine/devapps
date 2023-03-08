@@ -86,14 +86,18 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/addReclamation", name="addReclamation")
      */
-    public function addReclamation(Request $request,\Swift_Mailer $mailer): Response
+    public function addReclamation(Request $request,\Swift_Mailer $mailer,EntityManagerInterface $em): Response
     {
       
        $Reclamation=new Reclamation();
        $form=$this->createForm(ReclamationType::class,$Reclamation);
        $form->handleRequest($request);
+       
+       $user=$this->getDoctrine()->getManager()->getRepository(Utilisateur::class)->find(2);
        if($form->isSubmitted() && $form->isValid()){
         $Reclamation->setEtat("en cours");
+        $Reclamation->setIdUtilisateur($user);
+  
         $message = (new \Swift_Message('Hello new reclamation has been added  please wait from the response'))
         ->setFrom('yassine.boulares@esprit.tn')
         ->setTo('yassine.boulares@esprit.tn')
@@ -252,7 +256,54 @@ public function search(Request $request,SerializerInterface $serializer)
 
 
 
+/**
+ * @Route("/searched", name="search")
+ */
+public function searched(Request $request,SerializerInterface $serializer)
+{
+    $em = $this->getDoctrine()->getManager();
+    $bacRepository = $em->getRepository(Reclamation::class);
+  
+  // retrieve the search query from the 'query' attribute
+    $queryBuilder = $bacRepository->createQueryBuilder('b');
+    
+    $query = $request->query->get('search');
+   
 
+    
+    
+        $queryBuilder->where('b.sujet LIKE :search OR b.email LIKE :search OR b.description LIKE :search OR b.etat LIKE :search OR b.date LIKE :search')
+                     ->setParameter('search', "%$query%");
+    
+    
+   
+    
+    $result = $queryBuilder->getQuery()->getResult();
+    $json=$serializer->serialize($result,'json',['groups'=>'Reclamation']);
+   
+    
+    return new Response($json);
+}
+
+
+
+
+
+                             /**
+                            * @Route("/deleteReclamatione", name="deleteuereee")
+                            */
+                            public function deleteReclamatione( 
+                                Request $request,
+                                serializerInterface $serializer,
+                                EntityManagerInterface $entityManager){
+
+                            $Reclamation=$this->getDoctrine()->getRepository(Reclamation::class)->findOneBy(array('idRec'=>$request->query->get("id")));
+                            $em=$this->getDoctrine()->getManager();
+                            $em->remove($Reclamation);
+                            $em->flush();
+                            return new Response("success");
+                        
+                        }
 
 
 
@@ -333,19 +384,5 @@ $entityManager->flush();
 
 }
 
-/**
-* @Route("/deleteReclamatione", name="deleteuere")
-*/
-public function deleteReclamatione( 
-        Request $request,
-        serializerInterface $serializer,
-        EntityManagerInterface $entityManager){
-
-    $Reclamation=$this->getDoctrine()->getRepository(Reclamation::class)->findOneBy(array('idRec'=>$request->query->get("id")));
-    $em=$this->getDoctrine()->getManager();
-    $em->remove($Reclamation);
-    $em->flush();
-    return new Response("success");
-   
-}
+                   
 }

@@ -17,6 +17,7 @@ class Reclamation
 {
     /**
      * @var int
+     *@Groups({"groups", "Reclamation"})
      * @ORM\Column(name="id_rec", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -88,6 +89,10 @@ class Reclamation
     private $idUtilisateur;
 
     public function id_rec(): ?int
+    {
+        return $this->idRec;
+    }
+    public function getidRec(): ?int
     {
         return $this->idRec;
     }

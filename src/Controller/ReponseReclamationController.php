@@ -6,15 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
-
+use PDO;
 use App\Entity\ReponseReclamation;
 use App\Entity\Reclamation;
+use App\Entity\Utilisateur;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReponseReclamationType;
 use App\Form\ReponcenewType;
+use App\Service\TwilioService;
 
 class ReponseReclamationController extends AbstractController
 {
@@ -53,7 +55,7 @@ class ReponseReclamationController extends AbstractController
        if($form->isSubmitted() && $form->isValid()){
         $ReponseReclamation->setDate(new DateTime());
            $em = $this->getDoctrine()->getManager();
-           
+
            $em->persist($ReponseReclamation);
            $em->flush();
 
@@ -68,16 +70,30 @@ class ReponseReclamationController extends AbstractController
   /**
      * @Route("/addReponsefromrec/{id}", name="addReponsefromrec")
      */
-    public function addReponsefromrec(Request $request,$id): Response
+    public function addReponsefromrec(Request $request,$id,EntityManagerInterface $em,TwilioService $twilioService): Response
     {
       
        $ReponseReclamation=new ReponseReclamation();
        $reclamation=$this->getDoctrine()->getManager()->getRepository(Reclamation::class)->find($id);
+    
+     
+     $sql = "SELECT * FROM utilisateur where id=" . $reclamation->getIdUtilisateur()->getId() .";";
+     $stmt = $em->getConnection()->prepare($sql);
+     $result = $stmt->execute();
+      $row = $result->fetch(PDO::FETCH_ASSOC);
+
 
        $form=$this->createForm(ReponcenewType::class,$ReponseReclamation);
        $form->handleRequest($request);
        if($form->isSubmitted() && $form->isValid()){
+        
         $ReponseReclamation->setIdReclamation($reclamation);
+
+        $to = $row["username"];
+                $body = "Hey Mr/Mdme ".$row["nom"]." votre reclamation est traitée";
+                $twilioService->sendSms($to, $body);
+     
+        
         $ReponseReclamation->setDate(new DateTime());
            $em = $this->getDoctrine()->getManager();
            
