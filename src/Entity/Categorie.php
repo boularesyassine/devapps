@@ -31,8 +31,13 @@ class Categorie
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
+    
 
     public function getId(): ?int
+    {
+        return $this->id;
+    }
+    public function idCategorie(): ?int
     {
         return $this->id;
     }

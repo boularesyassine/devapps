@@ -35,29 +35,29 @@ class ProduitController extends AbstractController
     public function afficherProduits(): Response
     {
         $produits = $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
-        $form=$this->createForm(SearchFormType::class);
+        $form = $this->createForm(SearchFormType::class);
 
         return $this->render('produit/index.html.twig', [
             'b' => $produits,
-            'f'=>$form->createView()
+            'f' => $form->createView()
         ]);
     }
 
 
-  /**
+    /**
      * @Route("/affiherfavorieutlisateur", name="affiherfavorieutlisateur")
      */
     public function affiherfavorieutlisateur(Request $request): Response
     {
         $favorie = $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
         $utlisateur = new Utilisateur();
-         $utlisateur = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => $request->query->get("id")));
+        $utlisateur = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => $request->query->get("id")));
         $dd = $this->getDoctrine()->getRepository(Favorie::class)->findAll(array('id' => $utlisateur->getId()));
 
 
-    foreach ($dd as $valeur) {
-        $product =$this->getDoctrine()->getRepository(Produit::class)->findAll(array('id' => $valeur->getIdproduit()->getid()));
-    }
+        foreach ($dd as $valeur) {
+            $product = $this->getDoctrine()->getRepository(Produit::class)->findAll(array('id' => $valeur->getIdproduit()->getid()));
+        }
 
         return $this->render('produit/listfavoriefront.html.twig', [
             'b' => $product
@@ -72,7 +72,7 @@ class ProduitController extends AbstractController
     public function displaydemande(): Response
     {
         $demande = $this->getDoctrine()->getManager()->getRepository(Demande::class)->findAll();
-        
+
 
         return $this->render('produit/demande.html.twig', [
             'b' => $demande
@@ -80,13 +80,13 @@ class ProduitController extends AbstractController
     }
 
 
-      /**
+    /**
      * @Route("/diplayfavorie", name="diplayfavorie")
      */
     public function diplayfavorie(): Response
     {
         $favorie = $this->getDoctrine()->getManager()->getRepository(Favorie::class)->findAll();
-        
+
 
         return $this->render('produit/favorie.html.twig', [
             'b' => $favorie
@@ -184,70 +184,70 @@ class ProduitController extends AbstractController
     }
 
 
-/**
- * @Route("/search", name="search")
- */
-public function search(Request $request,SerializerSerializerInterface $serializer)
-{
-    $em = $this->getDoctrine()->getManager();
-    $bacRepository = $em->getRepository(Produit::class);
-  // deserialize the form data into an array
-  $search = $request->query->get('search_form');
-  $query= $search["searchQuery"];
-  $sort = $search["orderby"];
-  // retrieve the search query from the 'query' attribute
-    $queryBuilder = $bacRepository->createQueryBuilder('b');
-    
-    $search = $request->query->get('searchQuery');
-   
+    /**
+     * @Route("/search", name="search")
+     */
+    public function search(Request $request, SerializerSerializerInterface $serializer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bacRepository = $em->getRepository(Produit::class);
+        // deserialize the form data into an array
+        $search = $request->query->get('search_form');
+        $query = $search["searchQuery"];
+        $sort = $search["orderby"];
+        // retrieve the search query from the 'query' attribute
+        $queryBuilder = $bacRepository->createQueryBuilder('b');
 
-    
-    
+        $search = $request->query->get('searchQuery');
+
+
+
+
         $queryBuilder->where('b.nomProduit LIKE :search OR b.description LIKE :search OR b.prix LIKE :search OR b.quantite LIKE :search')
-                     ->setParameter('search', "%$query%");
-    
-    
-    if ($sort ) {
-        $queryBuilder->orderBy("b.$sort","ASC");
-    }
-    
-    $result = $queryBuilder->getQuery()->getResult();
-    $json=$serializer->serialize($result,'json',['groups'=>'produit']);
-   
-    
-    return $this->json([
-        'results' => $this->renderView('produit/result.html.twig', [
-            'b' => $result,
-           
-            
-        ]),
-    
-       
-    ]);
-}
+            ->setParameter('search', "%$query%");
 
-/**
+
+        if ($sort) {
+            $queryBuilder->orderBy("b.$sort", "ASC");
+        }
+
+        $result = $queryBuilder->getQuery()->getResult();
+        $json = $serializer->serialize($result, 'json', ['groups' => 'produit']);
+
+
+        return $this->json([
+            'results' => $this->renderView('produit/result.html.twig', [
+                'b' => $result,
+
+
+            ]),
+
+
+        ]);
+    }
+
+    /**
      * @Route("/ajouterdemande", name="ajouterdemande")
      */
     public function ajouterdemande(Request $request): Response
     {
 
-     $Demande = new Demande();
+        $Demande = new Demande();
         $Produit = $this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('idProduit' => $request->query->get("id")));
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => "1"));
-            $Demande->setDate(new DateTime());
+        $Demande->setDate(new DateTime());
 
-            $Demande->setIdproduit($Produit);
-            $Demande->setIdutilisateur($user);
-        
-        
-    
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Demande);
-            $em->flush();
+        $Demande->setIdproduit($Produit);
+        $Demande->setIdutilisateur($user);
 
-   
-            return $this->redirectToRoute('displaydemande');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($Demande);
+        $em->flush();
+
+
+        return $this->redirectToRoute('displaydemande');
     }
 
 
@@ -258,23 +258,69 @@ public function search(Request $request,SerializerSerializerInterface $serialize
     public function ajouterfavorie(Request $request): Response
     {
 
-     $favorie = new Favorie();
+        $favorie = new Favorie();
         $Produit = $this->getDoctrine()->getRepository(Produit::class)->findOneBy(array('idProduit' => $request->query->get("id")));
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(array('id' => "1"));
-            $favorie->setDate(new DateTime());
+        $favorie->setDate(new DateTime());
 
-            $favorie->setIdproduit($Produit);
-            $favorie->setIdutilisateur($user);
-        
-        
-    
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($favorie);
-            $em->flush();
+        $favorie->setIdproduit($Produit);
+        $favorie->setIdutilisateur($user);
 
-   
-            return $this->redirectToRoute('diplayfavorie');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($favorie);
+        $em->flush();
+
+
+        return $this->redirectToRoute('diplayfavorie');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+     * @Route("/searched", name="search")
+     */
+    public function searched(Request $request, SerializerSerializerInterface $serializer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bacRepository = $em->getRepository(Produit::class);
+        // deserialize the form data into an array
+       
+        // retrieve the search query from the 'query' attribute
+        $queryBuilder = $bacRepository->createQueryBuilder('b');
+
+        $search = $request->query->get('search');
+
+
+
+
+        $queryBuilder->where('b.nomProduit LIKE :search OR b.description LIKE :search OR b.prix LIKE :search OR b.quantite LIKE :search')
+            ->setParameter('search', "%$search%");
+
+
+       
+
+        $result = $queryBuilder->getQuery()->getResult();
+        $json = $serializer->serialize($result, 'json', ['groups' => 'Produit']);
+
+        return new Response($json);
+       
+    }
+
+
+
+
+
 
 
 
@@ -296,7 +342,6 @@ public function search(Request $request,SerializerSerializerInterface $serialize
     public function getProduits(SerializerSerializerInterface $serializer)
     {
         $Produits = $this->getDoctrine()->getManager()->getRepository(Produit::class)->findAll();
-
         $json = $serializer->serialize($Produits, 'json', ['groups' => 'Produit']);
         return new Response($json);
     }
@@ -312,29 +357,22 @@ public function search(Request $request,SerializerSerializerInterface $serialize
 
         $description = $request->query->get("description");
         $Prix1 = $request->query->get("prix");
-        $prixString = $request->query->get("prix");
-        $prixString = trim($prixString, "\""); 
-        $prixFloat = floatval($prixString); 
-
-
-
 
         $quantite = $request->query->get("quantite");
-        $valueWithoutQuotes = trim($quantite, "\""); 
-        $quantite = (int)$valueWithoutQuotes;
+
+
         $Photo = $request->query->get("photo");
         $date = new DateTime();
         $categorie = $request->query->get("idCategorie");
-        $valueWithoutQuotes = trim($categorie, "\""); 
-        $categorie = (int)$valueWithoutQuotes;
+
+
         $dateString = $date->format('Y-m-d H:i:s');
         $sql = "INSERT INTO `produit`( `nom_produit`, `description`, `prix`, `quantite`, `photo`, `date`, `id_categorie_id`) VALUES 
-    ('$nom',' $description','$prixFloat','$quantite','$Photo','$dateString','$categorie')";
+    ('$nom',' $description','$Prix1','$quantite','$Photo','$dateString','$categorie')";
         $stmt = $manager->getConnection()->prepare($sql);
         $result = $stmt->execute();
 
-        $json = $serializer->serialize($Produit, 'json', ['groups' => 'Produit']);
-        return new Response($json);
+        return new Response("sucess");
     }
 
 
@@ -352,10 +390,10 @@ public function search(Request $request,SerializerSerializerInterface $serialize
 
         $Produit->setNomProduit($request->query->get("nomProduit"));
         $Produit->setDescription($request->query->get("description"));
-        $prix = floatval($request->query->get("prix"));
+    
 
-        $Produit->setPrix($prix);
-        $quantite = (int) $request->query->get("quantite");
+        $Produit->setPrix($request->query->get("prix"));
+        $quantite =$request->query->get("quantite");
         $Produit->setQuantite($quantite);
         $entityManager->persist($Produit);
         $entityManager->flush();
@@ -364,7 +402,7 @@ public function search(Request $request,SerializerSerializerInterface $serialize
     }
 
     /**
-     * @Route("/deleteProduitt", name="deleteuer")
+     * @Route("/deleteProduitt", name="deleteprod")
      */
     public function deleteProduitt(Request $request, serializerInterface $serializer, EntityManagerInterface $entityManager)
     {

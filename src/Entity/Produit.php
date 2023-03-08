@@ -20,7 +20,7 @@ class Produit
 {
     /**
      * @var int
-     * 
+     *@Groups({"groups", "Produit"})
      * @ORM\Column(name="id_produit", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -97,18 +97,33 @@ class Produit
      * })
      */
 
-
     private $idCategorie;
 
 
     private $id_Categorie_id;
 
+  /**
+     *
+     * @var int
+     *@Groups({"groups", "Produit"})
+     */
+    private $ide;
+
     public function id_produit(): ?int
     {
         return $this->idProduit;
     }
+    public function getide(): ?int
+    {
+        return $this->idCategorie->getid();
+    }
 
     public function getid(): ?int
+    {
+        return $this->idProduit;
+    }
+
+    public function getidProduit(): ?int
     {
         return $this->idProduit;
     }
@@ -198,6 +213,13 @@ class Produit
     public function setIdCategorie(?Categorie $idCategorie): self
     {
         $this->idCategorie = $idCategorie;
+
+        return $this;
+    }
+
+    public function setIdCategories(?Categorie $idCategorie): self
+    {
+        $this->id_Categorie_id = $idCategorie;
 
         return $this;
     }
