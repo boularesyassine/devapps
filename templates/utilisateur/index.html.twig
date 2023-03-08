@@ -46,9 +46,22 @@
 
 
              <td> 
+           {% if user.bloquer == 1 %}
+              <a href="{{path('bloquer',{'id':user.id}) }}">bloquer </a>
+           
+            {% else %}
+              <a href="{{path('bloquer',{'id':user.id}) }}">deblocker </a>
+
+
+            {% endif %}
+
+
               <a href="{{path('modifierUser',{'id':user.id}) }}">modifier </a>
                <a href="{{path('deleteuser',{'id':user.id}) }}">supprimer </a>
                
+
+
+
              
               </td> 
     </tr>

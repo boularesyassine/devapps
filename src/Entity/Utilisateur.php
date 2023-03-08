@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Utilisateur
  *
@@ -17,7 +18,7 @@ class Utilisateur implements UserInterface
     /**
      * 
      * @var int
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="id", type="integer", nullable=false) 
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -28,7 +29,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" nom  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
@@ -37,7 +38,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" prenom  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
      */
     private $prenom;
@@ -46,7 +47,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" password  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
     private $password;
@@ -59,7 +60,7 @@ class Utilisateur implements UserInterface
      *     message="not_valid_email"
      * )
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
@@ -68,7 +69,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" adresse  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="adresse",
      *  type="string", length=255, nullable=false)
      */
@@ -76,14 +77,14 @@ class Utilisateur implements UserInterface
 
     /**
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="role", type="string", length=255, nullable=false)
      */
     private $role;
 
     /**
      * @var \DateTime
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="age", type="date", nullable=false)
      */
     private $age;
@@ -92,7 +93,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" username  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="username", type="string", length=255, nullable=false)
      */
     private $username;
@@ -101,21 +102,21 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank(message=" photo  est obligatoire")
      * @Assert\Type(type="string")
      * @var string
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="photo", type="string", length=255, nullable=false)
      */
     private $photo;
 
     /**
      * @var int
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="bloquer", type="integer", nullable=false)
      */
-    private $bloquer;
+    private $bloquer=1;
 
     /**
      * @var int|null
-     *
+     *@Groups({"groups", "Utilisateur"})
      * @ORM\Column(name="code", type="integer", nullable=true)
      */
     private $code;
