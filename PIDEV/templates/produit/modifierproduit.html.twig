@@ -1,0 +1,61 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+	<h1 style="text-align: center;">
+		Ajouter Produit
+	</h1>
+
+	{{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+	<div class="card">
+		<div
+			class="card-body">
+
+			<!-- Vertical Form -->
+			<form class="row g-3">
+				<div class="col-12">
+					<label for="inputNanme4" class="form-label">nom_produit</label>
+					{{ form_widget(f.nom_produit, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  nom_produit'}}) }}
+					{{ form_errors(f.nom_produit,{ 'attr':{'class':'text-danger'}}) }}
+
+				</div>
+				<div class="col-12">
+					<label for="inputAddress" class="form-label">description</label>
+					{{ form_widget(f.description, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  description'}}) }}
+					{{ form_errors(f.description,{ 'attr':{'class':'text-danger'}}) }}
+
+				</div>
+
+				<div class="col-12">
+					<label for="inputAddress" class="form-label">prix</label>
+					{{ form_widget(f.prix, {'attr': {'class': 'form-control','type':'number', 'placeholder': 'Enter  prix'}}) }}
+					{{ form_errors(f.prix,{ 'attr':{'class':'text-danger'}}) }}
+
+				</div>
+
+				<div class="col-12">
+					<label for="inputAddress" class="form-label">quantite</label>
+					{{ form_widget(f.quantite, {'attr': {'class': 'form-control','type':'number', 'placeholder': 'Enter  quantite'}}) }}
+					{{ form_errors(f.quantite,{ 'attr':{'class':'text-danger'}}) }}
+
+				</div>
+
+
+				<div class="col-12">
+					<label for="inputAddress" class="form-label">id categorie</label>
+					{{ form_widget(f.id_categorie) }}
+				</div>
+
+				<div class="text-center">
+
+					{{ form_widget(f) }}
+
+				</div>
+			</form>
+			<!-- Vertical Form -->
+
+		</div>
+	</div>
+	{{ form_end(f) }}
+
+{% endblock %}

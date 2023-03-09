@@ -1,0 +1,47 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">nom_pub</th>
+   
+      <th scope="col">description</th>
+
+        <th scope="col">image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for publicite in b %}
+    <tr>
+     
+    <td> {{ publicite.id }}</td> 
+     <td> {{ publicite.nom_pub}} </td>  
+        <td>{{  publicite.description}} </td> 
+         <td>    <img src="uploads/{{  publicite.image }}" height="100" width="100">  </td> 
+         
+             <td> 
+          <a href="{{path('modifierpublicite',{'id':publicite.id}) }}">modifier </a>
+               <a href="{{path('deletePublicite',{'id':publicite.id}) }}">supprimer </a>
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+</body>
+{% endblock %}

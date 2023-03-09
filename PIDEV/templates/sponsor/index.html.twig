@@ -1,0 +1,48 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">nom</th>
+   
+      <th scope="col">adresse</th>
+
+        <th scope="col">email</th>
+                <th scope="col">num_tel</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for Sponsor in b %}
+    <tr>
+     
+    <td> {{ Sponsor.id }}</td> 
+     <td> {{ Sponsor.nom}} </td>  
+        <td>{{  Sponsor.adresse}} </td> 
+         <td>{{  Sponsor.email }}</td> 
+         
+         <td>{{  Sponsor.num_tel }}</td> 
+             <td> 
+          <a href="{{path('modifierSponsor',{'id':Sponsor.id}) }}">modifier </a>
+               <a href="{{path('deleteSponsor',{'id':Sponsor.id}) }}">supprimer </a>
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

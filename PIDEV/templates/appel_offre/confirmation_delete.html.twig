@@ -1,0 +1,13 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+
+
+<a href="{{path('deleteOffre',{'id':id}) }}"> <button onclick="myFunction()" type="button" class="btn btn-danger">confirm delete</button> </a>
+<a href="{{path('afficheroffre') }}"> <button type="button" class="btn btn-warning">cancel</button> </a>
+
+<script>
+function myFunction() {
+  alert(" offre has been deleted!");
+}
+</script>
+{% endblock %}

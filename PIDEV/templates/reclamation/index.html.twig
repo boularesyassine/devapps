@@ -1,0 +1,123 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+         {{ form_start(f, {'attr': {'id': 'search-form'}}) }}
+       {{ form_widget(f.searchQuery,{'attr': {'id': 'querry'}}) }}
+        {{ form_widget(f.orderby,{'attr': {'id': 'order'}}) }}
+    {{ form_end(f) }}
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id_rec</th>
+      <th scope="col">sujet</th>
+   
+      <th scope="col">email</th>
+
+        <th scope="col">description</th>
+      <th scope="col">etat</th>
+      <th scope="col">date</th>
+
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody id="bac-table">
+    {% for reclamation in b %}
+    <tr>
+     
+    <td> {{ reclamation.id_rec }}</td> 
+     <td> {{ reclamation.sujet}} </td> 
+   
+       <td>{{  reclamation.email}}</td> 
+        <td>{{  reclamation.description}} </td> 
+         <td>{{  reclamation.etat }}</td> 
+          <td>{{  reclamation.date|date('d-m-Y')  }}</td> 
+        
+             <td> 
+               <a href="{{path('addReponsefromrec',{'id':reclamation.id_rec}) }}">ajouter reponse</a>
+               <a href="{{path('modifierRecla',{'id':reclamation.id_rec}) }}">modifier </a>
+               <a href="{{path('deleteRecla',{'idRec':reclamation.id_rec}) }}">supprimer </a>
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{ encore_entry_script_tags('app') }}
+
+
+<script> 
+$(document).ready(function() {
+    var typingTimer; // timer identifier
+    var doneTypingInterval = 500; // time in ms
+
+    $('#search-form').on('keyup', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    $('#search-form').on('keydown', function() {
+        clearTimeout(typingTimer);
+    });
+
+    function doneTyping() {
+        var form = $('#search-form');
+        var url = form.attr('action');
+        var formData = form.serialize();
+        $('#bac-table').html('<p>Loading...</p>');
+        $.ajax({
+            url: "http://127.0.0.1:8000/search",
+            type: 'GET',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                $('#bac-table').html(response.results);
+            },
+            error: function(xhr, status, error) {
+                $('#bac-table').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    }
+
+  $('#search-form').on('change', function() {
+        var form = $('#search-form');
+        var url = form.attr('action');
+        var formData = form.serialize();
+        $('#bac-table').html('<p>Loading...</p>');
+        $.ajax({
+            url: "http://127.0.0.1:8000/search",
+            type: 'GET',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                $('#bac-table').html(response.results);
+            },
+            error: function(xhr, status, error) {
+                $('#bac-table').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    });
+
+
+});
+</script>
+
+{% endblock %}

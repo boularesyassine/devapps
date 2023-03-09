@@ -1,0 +1,55 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+  <h1 class="m-0" style="text-align: center;">
+    Ajouter reponse
+  </h1>
+  {{ form_start(f,{attr:{novalidate:'novalidate' }}
+  ) }}
+  
+  
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card-body">
+          <!-- Vertical Form -->
+          <form class="row g-3">
+          <div class="col-12">
+        <h3> nom du produit :   {{ nom }}  </h3>
+    </div>
+            <div class="col-12">
+              <label for="inputNanme4" class="form-label">
+                prix
+              </label>
+              {{ form_widget(f.budget, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  prix' }}
+              ) }}
+                                                                                          
+              {{ form_errors(f.budget,{ 'attr':{'class':'text-danger' }}
+              ) }}
+              
+                              
+            </div>
+            <div class="col-12">
+              <label for="inputNanme4" class="form-label">
+                etat
+              </label>
+              {{ form_widget(f.etat, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  etat' }}
+              ) }}
+                                                                                          
+              {{ form_errors(f.etat,{ 'attr':{'class':'text-danger' }}
+              ) }}
+              
+                              
+            </div>
+            <div class="text-center">
+              {{ form_widget(f) }}
+            </div>
+          </form>
+        <!-- Vertical Form -->
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    {{ form_end(f) }}
+  {% endblock %}
+  

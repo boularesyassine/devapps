@@ -1,0 +1,61 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        <h2> all Facture  </h2>
+
+        export all facture  : 			<a class="btn px-3 mt-auto mx-auto" href="{{path('pdf') }}">export pdf</a>
+
+     export all facture exel :    <a href="{{ path('exel') }}">Export Data</a>
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id_facture </th>
+      <th scope="col">numero</th>
+   
+      <th scope="col">nom</th>
+
+      <th scope="col">prix</th>
+      <th scope="col">date</th>
+      <th scope="col">etat</th>
+      <th scope="col">description</th>
+            <th scope="col">image</th>
+      <th scope="col">id_utilisateur </th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for Facture in b %}
+    <tr>
+     
+    <td> {{ Facture.id }}</td> 
+     <td> {{ Facture.numero}} </td> 
+   
+       <td>{{  Facture.nom }}</td> 
+        <td>{{  Facture.prix}} </td> 
+         <td>{{  Facture.date|date('d-m-Y')  }}</td> 
+          <td>{{  Facture.etat }}</td> 
+           <td> {{ Facture.description}}</td> 
+            <td> <img src"uploads/{{  Facture.image }}" height="100" width="100"></td> 
+          <td>{{  Facture.id_utilisateur }}</td> 
+             <td> 
+                <a href="{{path('addFinancefromfacture',{'id':Facture.id}) }}">ajouter au finances</a>
+            <a href="{{path('modifierFacture',{'id':Facture.id}) }}">modifier </a>
+               <a href="{{path('deleteFacture',{'id':Facture.id}) }}">supprimer </a>
+             
+             
+              </td> 
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

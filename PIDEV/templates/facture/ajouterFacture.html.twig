@@ -1,0 +1,97 @@
+
+
+{% extends 'baseback.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;"> Ajouter facture </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">numero</label>
+                      {{ form_widget(f.numero, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  numero'}}) }}
+                                                                            {{ form_errors(f.numero,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">nom</label>
+                      {{ form_widget(f.nom, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  nom'}}) }}
+                                                      {{ form_errors(f.nom,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+     <div class="col-12">
+                  <label for="inputAddress" class="form-label">prix</label>
+                      {{ form_widget(f.prix, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  prix'}}) }}
+                                                      {{ form_errors(f.prix,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+
+     <div class="col-12">
+                  <label for="inputAddress" class="form-label">date</label>
+                      {{ form_widget(f.date, {'attr': {'class': 'form-control','type':'date', 'placeholder': 'Enter  date'}}) }}
+                                                      {{ form_errors(f.date,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+
+     <div class="col-12">
+                  <label for="inputAddress" class="form-label">etat</label>
+                      {{ form_widget(f.etat, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  etat'}}) }}
+                                                      {{ form_errors(f.etat,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+     <div class="col-12">
+                  <label for="inputAddress" class="form-label">description</label>
+                      {{ form_widget(f.description, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  description'}}) }}
+                                                      {{ form_errors(f.description,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+     <div class="col-12">
+                  <label for="inputAddress" class="form-label">image</label>
+                      {{ form_widget(f.image, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  image'}}) }}
+                                                      {{ form_errors(f.image,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+               <div class="col-12">
+                  <label for="inputAddress" class="form-label">id utilisateur</label>
+                      {{ form_widget(f.id_utilisateur) }}
+                </div>
+                  
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}
+
+
+
+
+
+
+
+
+
+ 

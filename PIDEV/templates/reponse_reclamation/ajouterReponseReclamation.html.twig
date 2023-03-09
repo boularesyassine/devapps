@@ -1,0 +1,57 @@
+
+
+
+
+ 
+
+
+
+
+
+
+ {% extends 'baseback.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;"> Ajouter reponse </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">sujet</label>
+                      {{ form_widget(f.sujet, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  sujet'}}) }}
+                                                                            {{ form_errors(f.sujet,{ 'attr':{'class':'text-danger'}}) }}
+
+  
+
+
+                     <div class="col-12">
+                  <label for="inputNanme4" class="form-label">etat</label>
+                      {{ form_widget(f.etat, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  etat'}}) }}
+                                                                            {{ form_errors(f.etat,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+                  <div class="col-12">
+                  <label for="inputAddress" class="form-label"> idReclamation</label>
+                      {{ form_widget(f.idReclamation) }}
+                </div>
+
+
+              
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}

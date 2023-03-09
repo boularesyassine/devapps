@@ -1,0 +1,47 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">nom_produit</th>
+      <th scope="col">budget</th>
+      <th scope="col">Etat</th>
+      <th scope="col">date</th>
+      <th scope="col">id_offre</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for reponseoffre in reponse %}
+      <tr>
+    
+    <td> {{ reponseoffre.id }}</td> 
+    <td> {{ reponseoffre.nom_produit}} </td> 
+    <td> {{ reponseoffre.budget}} </td> 
+    <td> {{ reponseoffre.Etat }}</td>
+    <td> {{ reponseoffre.date|date('d-m-Y') }}</td>  
+    <td> {{ reponseoffre.id_offre }}</td> 
+    
+    <td> 
+  <a href="{{path('modifierReponse',{'id':reponseoffre.id}) }}">modifier </a>
+               <a href="{{path('deleteReponse',{'id':reponseoffre.id}) }}">supprimer </a>
+    </td> 
+  
+  {% endfor %}
+
+</tbody>
+</table>
+</div>
+{% do reponse.setPageRange(4) %}
+{{ knp_pagination_render(reponse, 'Reponse_offre/pagination.html.twig') }}
+{% endblock %}

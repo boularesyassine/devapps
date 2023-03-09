@@ -1,0 +1,78 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+<section class="section about-section gray-bg" id="about">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-6">
+                        <div class="about-text go-to">
+                            <h3 class="dark-color">my profile</h3>
+                            <div class="row about-list">
+                                <div class="col-md-6">
+                                    <div class="media">
+                                        <label>nom   :  </label>
+                                        <p>{{  b.nom}}</p>
+                                    </div>
+                                    <div class="media">
+                                        <label>username  :</label>
+                                        <p>{{  b.username}}</p>
+                                    </div>
+                                    <div class="media">
+                                        <label>age</label>
+                                        <p>{{b.age|date('d-m-Y')}}</p>
+                                    </div>
+                                    <div class="media">
+                                        <label>prenom</label>
+                                        <p>{{b.prenom}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                  
+                                    <div class="media">
+                                        <label>email</label>
+                                        <p>{{b.email}}</p>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-avatar">
+                            <img src="uploads/{{  b.photo }}" height="300" width="300"> 
+                        </div>
+                    </div>
+                </div>
+                <div class="counter">
+                    <div class="row">
+                        <div class="col-6 col-lg-3">
+                            <div class="count-data text-center">
+                                <h6 class="count h2" data-to="500" data-speed="500">500</h6>
+                                <p class="m-0px font-w-600">Happy Clients</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="count-data text-center">
+                                <h6 class="count h2" data-to="150" data-speed="150">150</h6>
+                                <p class="m-0px font-w-600">Project Completed</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="count-data text-center">
+                                <h6 class="count h2" data-to="850" data-speed="850">850</h6>
+                                <p class="m-0px font-w-600">Photo Capture</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="count-data text-center">
+                                <h6 class="count h2" data-to="190" data-speed="190">190</h6>
+                                <p class="m-0px font-w-600">Telephonic Talk</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+ {% endblock %}

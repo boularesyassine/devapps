@@ -1,0 +1,36 @@
+
+{% block body %}
+
+	{% for produit in b %}
+					<tr>
+
+						<td>
+							{{ produit.id_produit }}</td>
+						<td>
+							{{ produit.nom_produit}}
+						</td>
+
+						<td>{{  produit.description }}</td>
+						<td>{{  produit.prix}}
+						</td>
+						<td>{{  produit.quantite }}</td>
+						<td>
+							<img src="uploads/{{  produit.photo }}" height="100" width="100">
+						</td>
+
+						<td>
+							{{ produit.date|date('d-m-Y') }}</td>
+						<td>{{  produit.idCategorie }}</td>
+
+
+						<td>
+							<a href="{{path('modifierproduit',{'id_produit':produit.id_produit}) }}">modifier
+							</a>
+							<a href="{{path('deleteProduit',{'id_produit':produit.id_produit}) }}">supprimer
+							</a>
+
+
+						</td>
+					{% endfor %}
+
+                        {% endblock %}

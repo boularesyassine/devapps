@@ -1,0 +1,112 @@
+security:
+    encoders:
+        App\Entity\Utilisateur:
+            algorithm: md5
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: lazy
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthentificatorAuthenticator
+            form_login:
+                login_path: app_login
+                check_path: /login
+                default_target_path: /login
+                always_use_default_target_path: false
+            logout:
+                path: app_logout
+                target: app_login
+
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the first access control that matches will be used
+    access_control:
+
+         - { path: ^/register, roles: PUBLIC_ACCESS }
+         - { path: ^/afficheroffrefront, roles: ROLE_USER }
+         - { path: ^/addOffrefront, roles: ROLE_USER }
+         - { path: ^/addReclamationfront, roles: ROLE_USER }
+         - { path: ^/afficheroffre, roles: ROLE_ADMIN }
+         - { path: ^/addOffre, roles: ROLE_ADMIN }
+         - { path: ^/modifierOffre, roles: ROLE_ADMIN }
+         - { path: ^/confirmdelete, roles: ROLE_ADMIN }
+         - { path: ^/deleteOffre, roles: ROLE_ADMIN }
+         - { path: ^/searchoffre, roles: ROLE_ADMIN }
+         - { path: ^/addcategorie, roles: ROLE_ADMIN }
+         - { path: ^/modifiercategorie, roles: ROLE_ADMIN }
+         - { path: ^/deletecategorie, roles: ROLE_ADMIN }
+         - { path: ^/displayFacture, roles: ROLE_ADMIN }
+         - { path: ^/addfactures, roles: ROLE_ADMIN }
+         - { path: ^/modifierFacture, roles: ROLE_ADMIN }
+         - { path: ^/deleteFacture, roles: ROLE_ADMIN }
+         - { path: ^/displayFinance, roles: ROLE_ADMIN }
+         - { path: ^/addFinances, roles: ROLE_ADMIN }
+         - { path: ^/addFinancefromfacture, roles: ROLE_ADMIN }
+         - { path: ^/modifierFinance, roles: ROLE_ADMIN }
+         - { path: ^/pdf, roles: ROLE_ADMIN }
+         - { path: ^/displaydemande, roles: ROLE_ADMIN }
+         - { path: ^/diplayfavorie, roles: ROLE_ADMIN }
+         - { path: ^/addproduit, roles: ROLE_ADMIN }
+         - { path: ^/modifierproduit, roles: ROLE_ADMIN }
+         - { path: ^/deleteProduit, roles: ROLE_ADMIN }
+         - { path: ^/searchproduit, roles: ROLE_ADMIN }
+         - { path: ^/ee, roles: ROLE_ADMIN }
+         - { path: ^/addpublicite, roles: ROLE_ADMIN }
+         - { path: ^/modifierpublicite, roles: ROLE_ADMIN }
+         - { path: ^/deletePublicite, roles: ROLE_ADMIN }
+         - { path: ^/stats, roles: ROLE_ADMIN }  
+         - { path: ^/statstiquerec, roles: ROLE_ADMIN }
+         - { path: ^/addReclamation, roles: ROLE_ADMIN }
+         - { path: ^/modifierecla, roles: ROLE_ADMIN }
+         - { path: ^/deleteRecla, roles: ROLE_ADMIN }
+         - { path: ^/search, roles: ROLE_ADMIN }
+         - { path: ^/afficherReponseOffre, roles: ROLE_ADMIN }
+         - { path: ^/addReponse, roles: ROLE_ADMIN }
+         - { path: ^/addReponseforoffre, roles: ROLE_ADMIN }
+         - { path: ^/modifierReponse, roles: ROLE_ADMIN }
+         - { path: ^/deleteReponse, roles: ROLE_ADMIN }
+         - { path: ^/displayReponseReclamation, roles: ROLE_ADMIN }
+         - { path: ^/addReponse, roles: ROLE_ADMIN }
+         - { path: ^/addReponsefromrec, roles: ROLE_ADMIN }
+         - { path: ^/modifierReponseReclamation, roles: ROLE_ADMIN }
+         - { path: ^/deleteReponseReclamation, roles: ROLE_ADMIN }
+         - { path: ^/displaysponsor, roles: ROLE_ADMIN }
+         - { path: ^/addSponsor, roles: ROLE_ADMIN }
+         - { path: ^/modifierSponsor, roles: ROLE_ADMIN }
+         - { path: ^/deleteSponsor, roles: ROLE_ADMIN }
+         - { path: ^/Utilisateurs, roles: ROLE_ADMIN }
+         - { path: ^/addUtilisateur, roles: ROLE_ADMIN }
+         - { path: ^/modifierUser, roles: ROLE_ADMIN }
+         - { path: ^/deleteuser, roles: ROLE_ADMIN }
+         - { path: ^/bloquer, roles: ROLE_ADMIN }
+         - { path: ^/rec, roles: ROLE_ADMIN }
+
+
+   
+
+
+
+
+
+
+
+

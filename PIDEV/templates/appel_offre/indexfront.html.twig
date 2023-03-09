@@ -1,0 +1,51 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">nom</th>
+      <th scope="col">quantite</th>
+      <th scope="col">budget</th>
+      <th scope="col">description</th>
+      <th scope="col">date</th>
+      <th scope="col">id_utilisateur_id</th>
+      <th scope="col">id_categorie_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for offre in offres %}
+      <tr>
+    
+    <td> {{ offre.id }}</td> 
+    <td> {{ offre.nom}} </td> 
+    <td> {{ offre.quantite }}</td> 
+    <td> {{ offre.budget}} </td> 
+    <td> {{ offre.description }}</td>
+    <td> {{ offre.date|date('d-m-Y') }}</td>  
+    <td> {{ offre.id_utilisateur_id }}</td> 
+    <td> {{ offre.id_categorie_id }}</td> 
+    
+    <td> 
+      <a href="{{path('addReponseforoffre',{'id':offre.id}) }}">reponse sur offre </a>
+
+  <a href="{{path('modifierOffre',{'id':offre.id}) }}">modifier </a>
+               <a href="{{path('deleteOffre',{'id':offre.id}) }}">supprimer </a>
+    </td> 
+  
+  {% endfor %}
+
+</tbody>
+</table>
+</div>
+{% endblock %}

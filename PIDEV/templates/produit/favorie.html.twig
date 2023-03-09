@@ -1,0 +1,55 @@
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+
+	<!-- Quick Action Toolbar Starts-->
+
+	<!-- Quick Action Toolbar Ends-->
+
+	<!-- content-wrapper ends -->
+	<!-- partial:partials/_footer.html -->
+
+		<div class="table-responsive"> <table class="table">
+			<thead>
+				<tr>
+					<th scope="col">id</th>
+					<th scope="col">idutilisateur </th>
+
+					<th scope="col">idproduit </th>
+
+					<th scope="col">date</th>
+
+				</tr>
+			</thead>
+			<tbody id="bac-table">
+				{% for favorie in b %}
+					<tr>
+
+						<td>
+							{{ favorie.id }}</td>
+						<td>
+							{{ favorie.idutilisateur}}
+						</td>
+
+						<td>{{  favorie.idproduit }}</td>
+						
+						
+
+						<td>
+							{{ favorie.date|date('d-m-Y') }}</td>
+						
+
+
+						
+
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+
+{% endblock %}

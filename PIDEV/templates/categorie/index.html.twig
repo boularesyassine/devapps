@@ -1,0 +1,43 @@
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+
+	<!-- Quick Action Toolbar Starts-->
+
+	<!-- Quick Action Toolbar Ends-->
+
+	<!-- content-wrapper ends -->
+	<!-- partial:partials/_footer.html -->
+
+		<div class="table-responsive"> <table class="table">
+			<thead>
+				<tr>
+					<th scope="col">id_categorie</th>
+					<th scope="col">nom_categorie</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for categorie in b %}
+					<tr>
+
+						<td>
+							{{categorie.id}}</td>
+						<td>
+							{{categorie.nom}}
+						</td>
+
+						<td>
+							<a href="{{path('modifiercategorie',{'id':categorie.id}) }}">modifier
+							</a>
+							<a href="{{path('deletecategorie',{'id':categorie.id}) }}">supprimer
+							</a>
+
+
+						</td>
+
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

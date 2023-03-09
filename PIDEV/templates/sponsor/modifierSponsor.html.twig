@@ -1,0 +1,64 @@
+
+
+
+
+
+ 
+
+
+ {% extends 'baseback.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;"> modifier sponsor </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">nom</label>
+                      {{ form_widget(f.nom, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  nom'}}) }}
+                                                                            {{ form_errors(f.nom,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">adresse</label>
+                      {{ form_widget(f.adresse, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  adresse'}}) }}
+                                                      {{ form_errors(f.adresse,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+      <div class="col-12">
+                  <label for="inputAddress" class="form-label">email</label>
+                      {{ form_widget(f.email, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  email'}}) }}
+                                                      {{ form_errors(f.email,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+      <div class="col-12">
+                  <label for="inputAddress" class="form-label">num_tel</label>
+                      {{ form_widget(f.numTel, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  numtel'}}) }}
+                                                      {{ form_errors(f.numTel,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+                
+    
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}

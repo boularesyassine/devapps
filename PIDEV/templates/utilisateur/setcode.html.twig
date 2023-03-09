@@ -1,0 +1,43 @@
+
+
+
+
+
+
+
+
+
+ {% extends 'basefront.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;">recuperer mot de passe </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                  
+  <div class="col-12">
+                  <label for="inputAddress" class="form-label">code</label>
+                      {{ form_widget(f.code, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter votre code'}}) }}
+                                                      {{ form_errors(f.code,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}

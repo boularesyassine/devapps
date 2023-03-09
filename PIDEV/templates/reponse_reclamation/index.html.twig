@@ -1,0 +1,52 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id_reponse </th>
+      <th scope="col">sujet</th>
+   
+      <th scope="col">etat</th>
+
+        <th scope="col">date</th>
+      <th scope="col">id_reclamation </th>
+
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for reponse in b %}
+    <tr>
+     
+    <td> {{ reponse.id_reponse }}</td> 
+     <td> {{ reponse.sujet}} </td> 
+   
+       <td>{{  reponse.etat}}</td> 
+        <td>{{  reponse.date |date('d-m-Y') }} </td> 
+          <td>{{  reponse.id_reclamation }}</td> 
+        
+             <td> 
+             
+             
+               <a href="{{path('modifierReponseReclamation',{'id':reponse.id_reponse}) }}">modifier </a>
+               <a href="{{path('deleteReponseReclamation',{'id':reponse.id_reponse}) }}">supprimer </a>
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}

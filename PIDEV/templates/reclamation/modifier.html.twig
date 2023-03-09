@@ -1,0 +1,61 @@
+
+
+
+
+
+
+
+ {% extends 'baseback.html.twig' %}
+ {% block body %}
+        <h1 style="text-align: center;"> modifier reclamation </h1> 
+
+ {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+        <div class="card">
+            <div class="card-body">
+
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">sujet</label>
+                      {{ form_widget(f.sujet, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  sujet'}}) }}
+                                                                            {{ form_errors(f.sujet,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">email</label>
+                      {{ form_widget(f.email, {'attr': {'class': 'form-control','type':'email', 'placeholder': 'Enter  email'}}) }}
+                                                      {{ form_errors(f.email,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+
+        <div class="col-12">
+                  <label for="inputNanme4" class="form-label">description</label>
+                      {{ form_widget(f.description, {'attr': {'class': 'form-control','type':'text', 'placeholder': 'Enter  description'}}) }}
+                                                                            {{ form_errors(f.description,{ 'attr':{'class':'text-danger'}}) }}
+
+                </div>
+
+               
+                  <div class="col-12">
+                  <label for="inputAddress" class="form-label"> idUtilisateur</label>
+                      {{ form_widget(f.idUtilisateur) }}
+                </div>
+
+
+              
+                <div class="text-center">
+
+          {{ form_widget(f) }}
+
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+{{ form_end(f) }}
+
+ {% endblock %}
