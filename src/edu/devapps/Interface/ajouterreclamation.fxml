@@ -28,7 +28,7 @@
             <String fx:value="shadow" />
          </styleClass>
       </TextField>
-      <TextField fx:id="descriptionrec" layoutX="154.0" layoutY="357.0" promptText="description" stylesheets="@../values/style.css">
+      <TextField fx:id="descriptionrec" layoutX="154.0" layoutY="357.0" onKeyPressed="#handlebadword" promptText="description" stylesheets="@../values/style.css">
          <styleClass>
             <String fx:value="search-box" />
             <String fx:value="shadow" />

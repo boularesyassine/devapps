@@ -2,24 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/yassine/Yassine.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/ModifierReponserecController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/utilites/reclamation.png</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/OnereponseviewController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/reponseviewController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/entity/Reponse_rec.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/services/ReponseRecService.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/AjoutereponserecController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/yassine/MyListener.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/entity/Reclamation.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/OneReclamationviewController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/ModifierReclamationController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/services/ReclamationService.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/utilites/reply.png</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/ReclamationviewController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/edu/devapps/Controller/AjouterreclamationController.java</file>
-            <file>file:/C:/Users/yassi/Desktop/yassine/src/utilites/MaConnexion.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -27,8 +27,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -78,7 +80,40 @@ public class ReclamationviewController implements Initializable {
       private List<Reclamation> reclamations = new ArrayList<>();
     private Image image;
     private MyListener myListener;
+    @FXML
+    private TextField rechercher;
     
+    
+    
+       private List<Reclamation> getsearchData(String rechercher) throws SQLException {
+      
+            List<Reclamation> reclamation = new ArrayList<>();
+        ReclamationService s = new ReclamationService();
+        Reclamation rec1;
+
+        for (int i = 0; i < s.rechercher(rechercher).size(); i++) {
+            Reclamation get = s.rechercher(rechercher).get(i);
+            
+            
+            rec1 = new Reclamation();
+            rec1.setId_rec(get.getId_rec());
+            rec1.setSujet(get.getSujet());
+            rec1.setEmail(get.getEmail());
+            rec1.setDescription(get.getDescription());
+            rec1.setEtat(get.getEtat());
+            rec1.setDate(get.getDate());
+            rec1.setId_utilisateur_id(get.getId_utilisateur_id());
+        
+           
+            
+         
+            reclamation.add(rec1);
+        }
+    
+
+      
+        return reclamation;
+    }
     
     private List<Reclamation> getData() throws SQLException {
       
@@ -275,6 +310,76 @@ public class ReclamationviewController implements Initializable {
     
     
     
+    }
+
+    @FXML
+    private void gotostatistique(ActionEvent event) throws IOException {
+        FXMLLoader load = new FXMLLoader(getClass().getResource("/edu/devapps/Interface/statistic.fxml"));
+                           Parent root =load.load();
+                           StatisticController c2=  load.getController();
+                           Scene ss= new Scene(root);
+                           Stage se= new Stage();
+                           se=(Stage)((Node)event.getSource()).getScene().getWindow();
+                           se.setScene(ss);
+                           se.show();
+    }
+
+    @FXML
+    private void search(KeyEvent event) throws SQLException {
+        
+        reclamations.clear();
+        grid.getChildren().clear();
+           reclamations.addAll(getsearchData(rechercher.getText()));
+        if (reclamations.size() > 0) {
+            setChosenCamping(reclamations.get(0));
+            myListener = new MyListener() {
+           
+
+            
+
+                @Override
+                public void onClickListener(Reclamation Reclamation) {
+                      setChosenCamping(Reclamation);
+                }
+
+                @Override
+                public void onClickListener(Reponse_rec Reponse_rec) {
+                
+                }
+            };
+        }
+        int column = 0;
+        int row = 1;
+        try {
+            for (int i = 0; i < reclamations.size(); i++) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/edu/devapps/Interface/onereclamationview.fxml"));
+                AnchorPane anchorPane = fxmlLoader.load();
+
+                OneReclamationviewController oneReclamationviewController = fxmlLoader.getController();
+                oneReclamationviewController.setData(reclamations.get(i),myListener);
+
+                if (column == 2) {
+                    column = 0;
+                    row++;
+                }
+
+                grid.add(anchorPane, column++, row); //(child,column,row)
+                //set grid width
+                grid.setMinWidth(Region.USE_COMPUTED_SIZE);
+                grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                grid.setMaxWidth(Region.USE_PREF_SIZE);
+
+                //set grid height
+                grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                grid.setMaxHeight(Region.USE_PREF_SIZE);
+
+                GridPane.setMargin(anchorPane, new Insets(10));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 }

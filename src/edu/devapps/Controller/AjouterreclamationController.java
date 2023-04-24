@@ -11,7 +11,11 @@ import edu.devapps.services.ReclamationService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -42,6 +47,19 @@ public class AjouterreclamationController implements Initializable {
     @FXML
     private TextField etatrec;
 
+      private static final List<String> badWords = new ArrayList<>();
+    private static final String BAD_WORDS_REGEX = "\\b(%s)\\b"; // Word boundary regex for exact word match
+
+    static {
+        // Populate the list of bad words
+        badWords.add("fuck");
+        badWords.add("test");
+        badWords.add("jihed");
+        badWords.add("hamma");
+        badWords.add("ammar");
+
+        // Add more bad words to the list as needed
+    }
     /**
      * Initializes the controller class.
      */
@@ -97,8 +115,8 @@ public class AjouterreclamationController implements Initializable {
             
             
             c.ajouterReclamation(new Reclamation(1,sujetrec.getText(), emailrec.getText(), descriptionrec.getText(), etatrec.getText(),d, 1));
-                Mail.sendMail(emailrec.getText());
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "reclamation ajouter avec  success");
+                Mail.sendMail(emailrec.getText(), 0);
+                Alert a = new Alert(Alert.AlertType.INFORMATION, "reclamation ajouter avec  success");
                 a.show();
                             anchorme.setVisible(false);
         
@@ -111,6 +129,28 @@ public class AjouterreclamationController implements Initializable {
                            s.setScene(ss);
                            s.show();
     }
+    }
+
+    @FXML
+    private void handlebadword(KeyEvent event) {
+        
+         String inputText = descriptionrec.getText();
+        String regex = String.format(BAD_WORDS_REGEX, String.join("|", badWords));
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputText);
+
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            // Replace bad words with asterisks
+            StringBuilder asterisks = new StringBuilder();
+            for (int i = start; i < end; i++) {
+                asterisks.append("*");
+            }
+           Alert a = new Alert(Alert.AlertType.INFORMATION, "bad words detected");
+                a.show();
+            descriptionrec.replaceText(start, end, asterisks.toString());
+        }
     }
     
 }

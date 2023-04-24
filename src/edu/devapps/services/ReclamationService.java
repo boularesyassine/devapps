@@ -113,9 +113,50 @@ public class ReclamationService {
 
 
     
+      public int nbrec() {
+        //var
+        
+       
+        List<Reclamation> films =new ArrayList<>();
+        //requette
+        int i=0;
+        String req ="SELECT COUNT(id_rec) as nb FROM reclamation";
+          try {
+              Statement st = cnx.createStatement();
+              ResultSet rs = st.executeQuery(req);
+              while (rs.next()){
+                i=rs.getInt(1);              }
+          } catch (SQLException ex) {
+              }
+    
+        return i;
+
+    
+       
+    }
     
     
+     public List<Reclamation> rechercher(String s) {
+        //var
+        
+       
+        List<Reclamation> reclamations =new ArrayList<>();
+        //requette
+        String req ="SELECT * FROM reclamation  where sujet like '%"+s+"%' OR email like  '%"+s+"%' OR description like '%"+s+"%' OR  etat like '%"+s+"%'";
+          try {
+              Statement st = cnx.createStatement();
+              ResultSet rs = st.executeQuery(req);
+              while (rs.next()){
+                  reclamations.add(new Reclamation(rs.getInt(1), rs.getString(2),rs.getString(3) ,rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7)));
+              }
+          } catch (SQLException ex) {
+              }
     
+        return reclamations;
+
+    
+       
+    }
     
     
     

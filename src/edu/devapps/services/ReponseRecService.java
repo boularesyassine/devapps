@@ -103,5 +103,32 @@ public class ReponseRecService {
             
         }
 }
+    
+    
+   public int nbreprec() {
+        //var
+        
+       
+        List<Reclamation> films =new ArrayList<>();
+        //requette
+        int i=0;
+        String req ="SELECT COUNT(id_reponse) as nb FROM reponse_reclamation";
+          try {
+              Statement st = cnx.createStatement();
+              ResultSet rs = st.executeQuery(req);
+              while (rs.next()){
+                i=rs.getInt(1);              }
+          } catch (SQLException ex) {
+              }
+    
+        return i;
+
+    
+   }
+    
+    
+    
+    
+    
 }
 
